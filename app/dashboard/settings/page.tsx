@@ -288,13 +288,13 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="opacity-60 pointer-events-none select-none">
-      <div className="flex items-center justify-between mb-6">
+    <div>
+      <div className="flex items-center justify-between mb-6 opacity-60">
         <h2 className="text-xl sm:text-2xl font-semibold">Settings</h2>
         <Button
           onClick={handleSaveChanges}
           disabled={!hasChanges || isLoading}
-          className="hidden sm:inline-flex"
+          className="hidden sm:inline-flex pointer-events-none"
         >
           {isLoading ? 'Saving...' : 'Save Changes'}
         </Button>
@@ -327,7 +327,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Content Area */}
-        <div className="lg:col-span-3 bg-white rounded-xl border border-gray-200 p-4 sm:p-6 lg:p-8">
+        <div className="lg:col-span-3 bg-white rounded-xl border border-gray-200 p-4 sm:p-6 lg:p-8 opacity-60 pointer-events-none select-none">
           {isInitialLoading ? (
             <div className="flex items-center justify-center h-64">
               <div className="text-center">
