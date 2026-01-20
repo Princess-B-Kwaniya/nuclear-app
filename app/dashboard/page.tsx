@@ -26,57 +26,65 @@ import {
 
 export default async function DashboardPage() {
 
-  // Fetch all data in parallel for better performance
-  const [
-    dashboardStats,
-    recentActivity,
-    upcomingDeliveries,
-    completedDeliveries,
-    complianceAlerts,
-    activeShipments
-  ] = await Promise.all([
-    getDashboardStats(),
-    getRecentActivity(5),
-    getUpcomingDeliveries(4),
-    getCompletedDeliveries(24),
-    getComplianceAlerts(),
-    getActiveShipments()
-  ])
-
+  // MOCK DATA FOR DASHBOARD
   const stats = [
     {
-      label: dashboardStats.activeShipments.label,
-      value: dashboardStats.activeShipments.value,
-      subtext: dashboardStats.activeShipments.subtext,
+      label: 'Active Shipments',
+      value: 5,
+      subtext: '5 shipments in progress',
       icon: Package,
       color: 'from-blue-500 to-blue-600',
       textColor: 'text-blue-600'
     },
     {
-      label: dashboardStats.pendingRequests.label,
-      value: dashboardStats.pendingRequests.value,
-      subtext: dashboardStats.pendingRequests.subtext,
+      label: 'Pending Requests',
+      value: 2,
+      subtext: '2 requests awaiting quotes',
       icon: Clock,
       color: 'from-amber-500 to-amber-600',
       textColor: 'text-amber-600'
     },
     {
-      label: dashboardStats.complianceStatus.label,
-      value: dashboardStats.complianceStatus.value,
-      subtext: dashboardStats.complianceStatus.subtext,
+      label: 'Compliance Status',
+      value: '1 Alert',
+      subtext: '1 compliance alert',
       icon: CheckCircle,
       color: 'from-green-500 to-green-600',
       textColor: 'text-green-600'
     },
     {
-      label: dashboardStats.monthlyTotal.label,
-      value: dashboardStats.monthlyTotal.value,
-      subtext: dashboardStats.monthlyTotal.subtext,
+      label: 'Monthly Total',
+      value: 'R 1,200,000',
+      subtext: 'This month',
       icon: TrendingUp,
       color: 'from-purple-500 to-purple-600',
       textColor: 'text-purple-600'
     },
-  ]
+  ];
+
+  const recentActivity = [
+    { id: 1, event: 'Shipment SH-2851 dispatched from Johannesburg', time: '5 min ago' },
+    { id: 2, event: 'Compliance alert issued for SH-2850', time: '30 min ago' },
+    { id: 3, event: 'New procurement request submitted', time: '1 hour ago' },
+    { id: 4, event: 'Delivery completed for SH-2849', time: '2 hours ago' },
+    { id: 5, event: 'Quote received for PR-2847', time: '3 hours ago' },
+  ];
+
+  const activeShipments = [
+    { id: 'SH-2851', isotope: 'Tc-99m', origin: 'Johannesburg', destination: 'Cape Town', status: 'In Transit', eta: '2 hours' },
+    { id: 'SH-2850', isotope: 'F-18', origin: 'Nairobi', destination: 'Mombasa', status: 'At Customs', eta: '4 hours' },
+    { id: 'SH-2849', isotope: 'I-131', origin: 'Lagos', destination: 'Accra', status: 'Dispatched', eta: '6 hours' },
+    { id: 'SH-2848', isotope: 'FDG', origin: 'Durban', destination: 'Pretoria', status: 'In Transit', eta: '3 hours' },
+    { id: 'SH-2847', isotope: 'Tc-99m', origin: 'Gaborone', destination: 'Windhoek', status: 'Delivered', eta: 'Delivered' },
+  ];
+
+  const complianceAlerts = [
+    { id: 1, title: 'Missing Certificate', description: 'Shipment SH-2850 is missing a compliance certificate.', severity: 'warning' },
+  ];
+
+  const upcomingDeliveries = [
+    { id: 'DEL-1001', date: '2026-01-21', time: '09:00', isotope: 'Tc-99m', destination: 'Cape Town', status: 'upcoming' },
+  ];
 
   const getStatusColor = (status: string): string => {
     switch (status) {
