@@ -1,13 +1,13 @@
 'use client';
 
-import { Shield, AlertTriangle, CheckCircle, FileText, Download, Eye } from 'lucide-react';
+import { Shield, AlertTriangle, CheckCircle, FileText, Eye } from 'lucide-react';
 import { useState } from 'react';
 import { 
   RenewDocumentDialog, 
   ViewDocumentDialog, 
   GenerateDocumentDialog 
 } from '@/components/compliance';
-import { downloadDocumentPDF } from '@/lib/compliance-utils';
+// Download functionality removed
 
 export default function CompliancePage() {
   const [selectedShipment, setSelectedShipment] = useState('SH-2851');
@@ -131,6 +131,7 @@ export default function CompliancePage() {
             { country: 'Kenya', status: 'compliant', color: 'bg-green-100 text-green-700' },
             { country: 'Nigeria', status: 'review', color: 'bg-amber-100 text-amber-700' },
             { country: 'Egypt', status: 'action-needed', color: 'bg-red-100 text-red-700' },
+            { country: 'Zimbabwe', status: 'compliant', color: 'bg-green-100 text-green-700' },
           ].map((jurisdiction) => (
             <div key={jurisdiction.country} className={`${jurisdiction.color} rounded-lg p-4 text-center`}>
               <div className="font-medium mb-1">{jurisdiction.country}</div>
@@ -184,17 +185,18 @@ export default function CompliancePage() {
             <h3 className="font-heading text-lg sm:text-xl mb-1 text-foreground">Document Checklist</h3>
             <p className="text-xs sm:text-sm text-muted-foreground">Shipment #SH-2851</p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex flex-col sm:flex-row gap-2 opacity-60 pointer-events-none select-none">
             <select 
               value={selectedShipment}
               onChange={(e) => setSelectedShipment(e.target.value)}
-              className="px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+              className="px-4 py-2 border border-input rounded-lg bg-gray-100 text-gray-400"
+              disabled
             >
               <option value="SH-2851">SH-2851</option>
               <option value="SH-2850">SH-2850</option>
               <option value="SH-2849">SH-2849</option>
             </select>
-            <button className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm">
+            <button className="px-4 py-2 bg-gray-100 text-gray-400 rounded-lg text-sm" disabled>
               Generate All Missing
             </button>
           </div>
@@ -233,26 +235,25 @@ export default function CompliancePage() {
                         <>
                           <button 
                             onClick={() => {
-                              setSelectedDocument(doc);
+                              setSelectedDocument({...doc, shipmentId: selectedShipment});
                               setViewDialogOpen(true);
                             }}
                             className="p-2 hover:bg-white rounded-lg transition-colors" 
-                            title="View"
+                            title="View Certificate"
                           >
                             <Eye className="w-4 h-4 text-muted-foreground" />
-                          </button>
-                          <button 
-                            onClick={() => downloadDocumentPDF(doc.name, selectedShipment, doc)}
-                            className="p-2 hover:bg-white rounded-lg transition-colors" 
-                            title="Download"
-                          >
-                            <Download className="w-4 h-4 text-muted-foreground" />
                           </button>
                         </>
                       )}
                       {doc.status === 'in-progress' && (
-                        <button className="px-4 py-2 bg-white border border-amber-600 text-amber-700 rounded-lg hover:bg-amber-50 transition-colors text-sm">
-                          Upload Document
+                        <button 
+                          onClick={() => {
+                            setSelectedDocument({ name: doc.name, shipmentId: selectedShipment });
+                            setRenewDialogOpen(true);
+                          }}
+                          className="px-4 py-2 bg-white border border-amber-600 text-amber-700 rounded-lg hover:bg-amber-50 transition-colors text-sm"
+                        >
+                          Renew
                         </button>
                       )}
                       {doc.status === 'expired' && (
