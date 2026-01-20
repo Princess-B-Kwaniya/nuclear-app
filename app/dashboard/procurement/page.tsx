@@ -50,8 +50,16 @@ export default function ProcurementPage() {
     { 
       id: 'PR-2844', 
       isotope: 'Lu-177', 
-      if (view === 'form') {
-        return (
+      quantity: '75 mCi', 
+      deliveryDate: '2026-01-15', 
+      status: 'Draft',
+      matchedManufacturers: 0,
+      statusColor: 'bg-gray-100 text-gray-700'
+    },
+  ];
+
+  if (view === 'form') {
+    return (
           <div className="max-w-3xl mx-auto">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
               <h2 className="text-xl sm:text-2xl">
