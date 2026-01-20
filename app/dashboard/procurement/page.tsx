@@ -305,7 +305,7 @@ export default function ProcurementPage() {
         {/* Mobile Card View */}
         <MobileOnly>
           <div className="p-4 space-y-3">
-            {requests.map((request) => (
+            {procurementRequests.map((request) => (
               <MobileTableCard key={request.id}>
                 <MobileTableCardRow 
                   label="ID" 
