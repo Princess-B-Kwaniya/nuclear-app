@@ -282,8 +282,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 type="search"
                 name="search"
                 placeholder="Search..."
-                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 min-h-[44px] bg-background"
-                style={{ borderColor: 'var(--border)', color: 'var(--foreground)' }}
+                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 min-h-[44px] bg-background text-gray-400 cursor-not-allowed opacity-60"
+                style={{ borderColor: 'var(--border)', color: '#a3a3a3', backgroundColor: '#f3f4f6' }}
+                disabled
               />
             </form>
           </div>
@@ -330,7 +331,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     name="search"
                     placeholder="Search..."
                     autoFocus
-                    className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 bg-background text-foreground"
+                    className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 bg-background text-gray-400 cursor-not-allowed opacity-60"
+                    style={{ color: '#a3a3a3', backgroundColor: '#f3f4f6' }}
+                    disabled
                   />
                 </div>
               </form>

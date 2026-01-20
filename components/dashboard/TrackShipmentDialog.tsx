@@ -32,6 +32,8 @@ export function TrackShipmentDialog({ isOpen, onClose }: TrackShipmentDialogProp
   const [searchResult, setSearchResult] = useState<ShipmentResult | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  // Grey out/disable all shipment tracking inputs for dashboard request
+  const inputsDisabled = true;
 
   // Mock shipments data - in real app, this would come from API
   const mockShipments: ShipmentResult[] = [
@@ -119,14 +121,16 @@ export function TrackShipmentDialog({ isOpen, onClose }: TrackShipmentDialogProp
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="pl-10"
+                className="pl-10 text-gray-400 cursor-not-allowed opacity-60 bg-gray-100"
+                disabled={inputsDisabled}
               />
             </div>
             <Button 
               onClick={handleSearch}
-              disabled={!searchQuery || isSearching}
+              disabled={true}
+              className="opacity-60 cursor-not-allowed"
             >
-              {isSearching ? 'Searching...' : 'Search'}
+              Search
             </Button>
           </div>
 
