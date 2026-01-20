@@ -367,28 +367,19 @@ export default function ShipmentsPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
         <h2 className="font-heading text-xl sm:text-2xl text-foreground">Shipments & Logistics</h2>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 opacity-60 pointer-events-none select-none">
           <button 
-            onClick={() => setViewType('list')}
-            className={`p-2 rounded-lg transition-colors ${
-              viewType === 'list' ? 'bg-primary/10 text-primary' : 'hover:bg-muted'
-            }`}
+            className={`p-2 rounded-lg transition-colors bg-gray-100 text-gray-400`}
           >
             <List className="w-5 h-5" />
           </button>
           <button 
-            onClick={() => setViewType('map')}
-            className={`p-2 rounded-lg transition-colors ${
-              viewType === 'map' ? 'bg-primary/10 text-primary' : 'hover:bg-muted'
-            }`}
+            className={`p-2 rounded-lg transition-colors bg-gray-100 text-gray-400`}
           >
             <Map className="w-5 h-5" />
           </button>
           <button 
-            onClick={() => setViewType('kanban')}
-            className={`p-2 rounded-lg transition-colors ${
-              viewType === 'kanban' ? 'bg-primary/10 text-primary' : 'hover:bg-muted'
-            }`}
+            className={`p-2 rounded-lg transition-colors bg-gray-100 text-gray-400`}
           >
             <LayoutGrid className="w-5 h-5" />
           </button>
@@ -396,27 +387,28 @@ export default function ShipmentsPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg p-3 sm:p-4 mb-6 border border-gray-200 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+      <div className="bg-white rounded-lg p-3 sm:p-4 mb-6 border border-gray-200 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 opacity-60 pointer-events-none select-none">
         <div className="relative flex-1 max-w-full sm:max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input 
             type="text" 
             placeholder="Search shipments..."
-            className="w-full pl-10 pr-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2 border border-input rounded-lg bg-gray-100 text-gray-400"
+            disabled
           />
         </div>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-2">
-          <select className="px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring">
+          <select className="px-4 py-2 border border-input rounded-lg bg-gray-100 text-gray-400" disabled>
             <option>All Statuses</option>
             <option>Dispatched</option>
             <option>In Transit</option>
             <option>At Customs</option>
             <option>Delivered</option>
           </select>
-          <select className="px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring">
+          <select className="px-4 py-2 border border-input rounded-lg bg-gray-100 text-gray-400" disabled>
             <option>All Isotopes</option>
           </select>
-          <button className="px-4 py-2 border border-input rounded-lg hover:bg-muted transition-colors flex items-center justify-center gap-2">
+          <button className="px-4 py-2 border border-input rounded-lg bg-gray-100 text-gray-400 flex items-center justify-center gap-2" disabled>
             <Filter className="w-4 h-4" />
             More Filters
           </button>
@@ -445,8 +437,8 @@ export default function ShipmentsPage() {
               {shipments.map((shipment) => (
                 <tr 
                   key={shipment.id} 
-                  className="hover:bg-muted transition-colors cursor-pointer"
-                  onClick={() => setSelectedShipment(shipment.id)}
+                  className={`hover:bg-muted transition-colors cursor-pointer ${shipment.id === 'SH-2851' ? 'opacity-60 pointer-events-none select-none bg-gray-100' : ''}`}
+                  onClick={shipment.id === 'SH-2851' ? undefined : () => setSelectedShipment(shipment.id)}
                 >
                   <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-mono text-primary">
                     {shipment.id}
@@ -458,7 +450,7 @@ export default function ShipmentsPage() {
                   </td>
                   <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-foreground">{shipment.carrier}</td>
                   <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
-                    <span className={`px-2 sm:px-3 py-1 rounded-full text-xs ${shipment.statusColor}`}>
+                    <span className={`px-2 sm:px-3 py-1 rounded-full text-xs ${shipment.statusColor} opacity-60 bg-gray-100 text-gray-400`}>
                       {shipment.status}
                     </span>
                   </td>

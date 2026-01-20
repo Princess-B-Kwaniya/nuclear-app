@@ -141,18 +141,13 @@ export default function ReportsPage() {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3 opacity-60 pointer-events-none select-none">
         <h2 className="font-heading text-xl sm:text-2xl text-foreground">Reports & Analytics</h2>
         <button 
-          onClick={handleExportReport}
-          disabled={isExporting}
-          className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 self-start text-sm disabled:opacity-50 disabled:cursor-not-allowed font-sans"
+          className="px-4 py-2 bg-gray-100 text-gray-400 rounded-lg flex items-center justify-center gap-2 self-start text-sm"
+          disabled
         >
-          {isExporting ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
-          ) : (
-            <Download className="w-4 h-4" />
-          )}
+          <Download className="w-4 h-4" />
           Export Report
         </button>
       </div>

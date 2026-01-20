@@ -9,7 +9,7 @@ export default function ProcurementPage() {
   const searchParams = useSearchParams();
   const viewParam = searchParams?.get('view');
   const [view, setView] = useState<'list' | 'form' | 'quotes'>('list');
-  const [formStep, setFormStep] = useState(1);
+  // Remove multi-step form for 1-step creation
   const [editingRequest, setEditingRequest] = useState<any>(null);
 
   // Handle URL parameter on mount
@@ -50,220 +50,130 @@ export default function ProcurementPage() {
     { 
       id: 'PR-2844', 
       isotope: 'Lu-177', 
-      quantity: '50 mCi', 
-      deliveryDate: '2026-01-15', 
-      status: 'Draft',
-      matchedManufacturers: 0,
-      statusColor: 'bg-gray-100 text-gray-700'
-    },
-  ];
-
-  const [requests, setRequests] = useState(procurementRequests);
-
-  const handleEdit = (request: any) => {
-    setEditingRequest(request);
-    setFormStep(1);
-    setView('form');
-  };
-
-  const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this procurement request?')) {
-      setRequests(prev => prev.filter(r => r.id !== id));
-    }
-  };
-
-  const quotes = [
-    {
-      manufacturer: 'NucMed Solutions',
-      rating: 4.8,
-      price: { product: 4500, shipping: 350, insurance: 150 },
-      deliveryTime: '24 hours',
-      activityAtArrival: '95%',
-      isBestValue: true
-    },
-    {
-      manufacturer: 'RadioPharma Inc',
-      rating: 4.6,
-      price: { product: 4200, shipping: 450, insurance: 200 },
-      deliveryTime: '36 hours',
-      activityAtArrival: '92%',
-      isBestValue: false
-    },
-    {
-      manufacturer: 'Isotope Global',
-      rating: 4.9,
-      price: { product: 4800, shipping: 300, insurance: 125 },
-      deliveryTime: '18 hours',
-      activityAtArrival: '97%',
-      isBestValue: false
-    },
-  ];
-
-
-  if (view === 'quotes') {
-    return (
-      <div>
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
-          <div>
-            <h2 className="text-xl sm:text-2xl mb-1">Quote Comparison</h2>
-            <p className="text-sm sm:text-base text-gray-600">Request #PR-2847 - Tc-99m</p>
-          </div>
-          <button 
-            onClick={() => setView('list')}
-            className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors self-start"
-          >
-            Back to List
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
-          {quotes.map((quote, index) => {
-            const total = quote.price.product + quote.price.shipping + quote.price.insurance;
-            return (
-              <div 
-                key={index}
-                className={`bg-card rounded-xl p-6 border-2 ${
-                  quote.isBestValue ? 'border-primary' : 'border-border'
-                } hover:shadow-lg transition-shadow relative`}
+      if (view === 'form') {
+        return (
+          <div className="max-w-3xl mx-auto">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
+              <h2 className="text-xl sm:text-2xl">
+                {editingRequest ? 'Edit Procurement Request' : 'New Procurement Request'}
+              </h2>
+              <button 
+                onClick={() => {
+                  setView('list');
+                  setEditingRequest(null);
+                }}
+                className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors self-start"
               >
-                {quote.isBestValue && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-primary-foreground text-xs rounded-full font-sans">
-                    Best Value
-                  </div>
-                )}
-                
-                <div className="mb-4">
-                  <h3 className="font-heading text-lg mb-2 text-foreground">{quote.manufacturer}</h3>
-                  <div className="flex items-center gap-1">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <div 
-                        key={i} 
-                        className={`w-4 h-4 ${
-                          i < Math.floor(quote.rating) ? 'text-yellow-400' : 'text-gray-300'
-                        }`}
-                      >
-                        ★
-                      </div>
-                    ))}
-                    <span className="text-sm text-muted-foreground ml-1">{quote.rating}</span>
-                  </div>
-                </div>
-
-                <div className="space-y-2 mb-4 pb-4 border-b border-border">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Product</span>
-                    <span className="text-foreground">${quote.price.product.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Shipping</span>
-                    <span className="text-foreground">${quote.price.shipping.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Insurance</span>
-                    <span className="text-foreground">${quote.price.insurance.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between pt-2 border-t border-border">
-                    <span className="text-foreground font-medium">Total</span>
-                    <span className="text-lg text-foreground font-medium">${total.toLocaleString()}</span>
-                  </div>
-                </div>
-
-                <div className="space-y-3 mb-6">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Delivery Time</span>
-                    <span className="text-foreground">{quote.deliveryTime}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Activity at Arrival</span>
-                    <span className="text-green-600">{quote.activityAtArrival}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-green-600">
-                    <div className="w-4 h-4 flex items-center justify-center">✓</div>
-                    <span>All compliance checks passed</span>
-                  </div>
-                </div>
-
-                <button className="w-full bg-primary text-primary-foreground py-3 rounded-lg hover:bg-primary/90 transition-colors font-sans">
-                  Select & Create PO
-                </button>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  }
-
-
-  if (view === 'form') {
-    return (
-      <div className="max-w-3xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
-          <h2 className="text-xl sm:text-2xl">
-            {editingRequest ? 'Edit Procurement Request' : 'New Procurement Request'}
-          </h2>
-          <button 
-            onClick={() => {
-              setView('list');
-              setEditingRequest(null);
-            }}
-            className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors self-start"
-          >
-            Cancel
-          </button>
-        </div>
-
-        {/* Progress Indicator */}
-        <div className="flex items-center mb-8 overflow-x-auto pb-2">
-          {[
-            { num: 1, label: 'Isotope Details' },
-            { num: 2, label: 'Delivery' },
-            { num: 3, label: 'Review' }
-          ].map((step, index) => (
-            <div key={step.num} className="flex items-center flex-1 min-w-[120px]">
-              <div className="flex items-center">
-                <div 
-                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-sm sm:text-base ${
-                    formStep >= step.num 
-                      ? 'bg-primary text-primary-foreground' 
-                      : 'bg-secondary text-muted-foreground'
-                  }`}
-                >
-                  {step.num}
-                </div>
-                <span className={`ml-2 sm:ml-3 text-xs sm:text-sm whitespace-nowrap ${formStep >= step.num ? 'text-foreground' : 'text-muted-foreground'}`}>
-                  {step.label}
-                </span>
-              </div>
-              {index < 2 && (
-                <div className={`flex-1 h-0.5 mx-2 sm:mx-4 ${formStep > step.num ? 'bg-primary' : 'bg-secondary'}`}></div>
-              )}
+                Cancel
+              </button>
             </div>
-          ))}
-        </div>
-
-        <div className="bg-card rounded-xl p-4 sm:p-6 lg:p-8 border border-border">
-          {formStep === 1 && (
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm mb-2 text-foreground">Isotope Type</label>
-                <div className="relative">
-                  <select 
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent appearance-none"
-                    defaultValue={editingRequest?.isotope || ''}
+            <div className="bg-card rounded-xl p-4 sm:p-6 lg:p-8 border border-border">
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm mb-2 text-foreground">Isotope Type</label>
+                  <div className="relative">
+                    <select 
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent appearance-none"
+                      defaultValue={editingRequest?.isotope || ''}
+                    >
+                      <option>Select isotope...</option>
+                      <option>Tc-99m (Half-life: 6 hours)</option>
+                      <option>F-18 FDG (Half-life: 110 minutes)</option>
+                      <option>I-131 (Half-life: 8 days)</option>
+                      <option>Lu-177 (Half-life: 6.7 days)</option>
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm mb-2 text-foreground">Activity Required</label>
+                    <input 
+                      type="number" 
+                      placeholder="500"
+                      defaultValue={editingRequest ? parseInt(editingRequest.quantity) : ''}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm mb-2 text-foreground">Unit</label>
+                    <select className="w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-input-background text-foreground">
+                      <option>mCi</option>
+                      <option>GBq</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm mb-2">Clinical Indication (Optional)</label>
+                  <textarea 
+                    rows={3}
+                    placeholder="Enter clinical indication..."
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent resize-none"
+                  ></textarea>
+                </div>
+                <div>
+                  <label className="block text-sm mb-2">Attach Documents</label>
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-purple-600 transition-colors cursor-pointer">
+                    <p className="text-gray-600">Click to upload or drag and drop</p>
+                    <p className="text-sm text-gray-500 mt-1">PDF, DOC (max. 10MB)</p>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm mb-2">Delivery Date</label>
+                  <input 
+                    type="date"
+                    defaultValue={editingRequest?.deliveryDate || ''}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm mb-2">Preferred Time Window</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {['Morning', 'Afternoon', 'Evening'].map((time) => (
+                      <button 
+                        key={time}
+                        className="px-4 py-3 border border-gray-300 rounded-lg hover:border-purple-600 hover:bg-purple-50 transition-colors"
+                      >
+                        {time}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm mb-2">Delivery Location</label>
+                  <input 
+                    type="text" 
+                    defaultValue="City Hospital, 123 Medical Ave, Cape Town"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm mb-2">Special Instructions</label>
+                  <textarea 
+                    rows={3}
+                    placeholder="Enter any special handling or delivery instructions..."
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent resize-none"
+                  ></textarea>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3 mt-8">
+                  <button 
+                    onClick={() => {
+                      setView('list');
+                      setEditingRequest(null);
+                    }}
+                    className="flex-1 bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors order-1 sm:order-2"
                   >
-                    <option>Select isotope...</option>
-                    <option>Tc-99m (Half-life: 6 hours)</option>
-                    <option>F-18 FDG (Half-life: 110 minutes)</option>
-                    <option>I-131 (Half-life: 8 days)</option>
-                    <option>Lu-177 (Half-life: 6.7 days)</option>
-                  </select>
-                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+                    Submit Request
+                  </button>
+                  <button className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors order-3">
+                    Save as Draft
+                  </button>
                 </div>
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
+            </div>
+          </div>
+        );
+      }
                   <label className="block text-sm mb-2 text-foreground">Activity Required</label>
                   <input 
                     type="number" 
@@ -439,20 +349,20 @@ export default function ProcurementPage() {
           />
         </div>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-2">
-          <select className="px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-input-background text-foreground">
+          <select className="px-4 py-2 border border-input rounded-lg bg-gray-100 text-gray-400 cursor-not-allowed opacity-60" disabled>
             <option>All Statuses</option>
             <option>Draft</option>
             <option>Pending Quotes</option>
             <option>Quotes Received</option>
             <option>PO Approved</option>
           </select>
-          <select className="px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-input-background text-foreground">
+          <select className="px-4 py-2 border border-input rounded-lg bg-gray-100 text-gray-400 cursor-not-allowed opacity-60" disabled>
             <option>All Isotopes</option>
             <option>Tc-99m</option>
             <option>F-18 FDG</option>
             <option>I-131</option>
           </select>
-          <button className="px-4 py-2 border border-input rounded-lg hover:bg-muted transition-colors flex items-center justify-center gap-2">
+          <button className="px-4 py-2 border border-input rounded-lg bg-gray-100 text-gray-400 cursor-not-allowed opacity-60 flex items-center justify-center gap-2" disabled>
             <Filter className="w-4 h-4" />
             More Filters
           </button>
@@ -590,9 +500,9 @@ export default function ProcurementPage() {
         {/* Pagination */}
         <div className="px-4 sm:px-6 py-4 border-t border-border flex flex-col sm:flex-row items-center justify-end gap-3">
           <div className="flex items-center gap-2">
-            <button type="button" className="px-3 py-1 border border-input rounded hover:bg-muted transition-colors text-sm min-h-[44px]">Previous</button>
-            <button type="button" className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm min-h-[44px]">1</button>
-            <button type="button" className="px-3 py-1 border border-input rounded hover:bg-muted transition-colors text-sm min-h-[44px]">Next</button>
+            <button type="button" className="px-3 py-1 border border-input rounded bg-gray-100 text-gray-400 cursor-not-allowed opacity-60 text-sm min-h-[44px]" disabled>Previous</button>
+            <button type="button" className="px-3 py-1 bg-gray-100 text-gray-400 cursor-not-allowed opacity-60 rounded text-sm min-h-[44px]" disabled>1</button>
+            <button type="button" className="px-3 py-1 border border-input rounded bg-gray-100 text-gray-400 cursor-not-allowed opacity-60 text-sm min-h-[44px]" disabled>Next</button>
           </div>
         </div>
       </div>
