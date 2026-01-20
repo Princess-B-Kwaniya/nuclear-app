@@ -1,0 +1,10 @@
+.vercel
+.env*.local
+node_modules/
+.next/
+supabase/.temp/
+build/
+dist/
+*.log
+*.tsbuildinfo
+package-lock.json

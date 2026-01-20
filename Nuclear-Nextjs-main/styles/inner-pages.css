@@ -1,0 +1,257 @@
+/**
+ * Inner Pages Brand Styles
+ * 
+ * This stylesheet defines the NuClear brand colors and typography
+ * specifically for inner pages (dashboard, login, settings, etc.).
+ * 
+ * The home page (landing page) maintains its own styling and is NOT affected.
+ */
+
+/* Inner Page Scope - Apply NuClear Brand Colors */
+.inner-page {
+  /* NuClear Brand Color Palette */
+  
+  /* Primary – Clinical Navy Blue (#153057) - Trust & Scientific Authority */
+  --primary: #153057;
+  --primary-foreground: #FFFFFF;
+  
+  /* Accent – Refined Gold/Amber (#c69c6d) - Quality & Precision */
+  --accent: #c69c6d;
+  --accent-foreground: #153057;
+  
+  /* Neutral Support – Medical Light Gray (#bec1c4) */
+  --neutral-gray: #bec1c4;
+  --secondary: #bec1c4;
+  --secondary-foreground: #153057;
+  
+  /* Base – Soft Clinical White (#F7F9FC) - Clean, Sterile, Modern Canvas */
+  --background: #F7F9FC;
+  
+  /* Foreground & Text Colors */
+  --foreground: #153057;
+  --muted-foreground: rgba(21, 48, 87, 0.7);
+  
+  /* Card & Surface Colors – Pure White (#FFFFFF) - Extra Contrast */
+  --card: #FFFFFF;
+  --card-foreground: #153057;
+  
+  /* Popover Colors */
+  --popover: #FFFFFF;
+  --popover-foreground: #153057;
+  
+  /* Muted Backgrounds */
+  --muted: rgba(190, 193, 196, 0.3);
+  
+  /* Borders & Inputs */
+  --border: rgba(190, 193, 196, 0.4);
+  --input: #bec1c4;
+  --input-background: #FFFFFF;
+  
+  /* Focus Ring - Refined Gold */
+  --ring: #c69c6d;
+  
+  /* Chart Colors - NuClear Palette */
+  --chart-1: #153057;
+  --chart-2: #bec1c4;
+  --chart-3: #c69c6d;
+  --chart-4: #F7F9FC;
+  --chart-5: #FFFFFF;
+  
+  /* Sidebar Colors */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #153057;
+  --sidebar-primary: #153057;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: rgba(190, 193, 196, 0.3);
+  --sidebar-accent-foreground: #153057;
+  --sidebar-border: rgba(190, 193, 196, 0.4);
+  --sidebar-ring: #c69c6d;
+  
+  /* Apply background color */
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Typography for Inner Pages */
+.inner-page h1,
+.inner-page h2 {
+  font-family: 'The Seasons', Georgia, 'Times New Roman', serif;
+  color: var(--primary);
+}
+
+.inner-page h3,
+.inner-page h4,
+.inner-page h5,
+.inner-page h6,
+.inner-page p,
+.inner-page span,
+.inner-page div,
+.inner-page label,
+.inner-page button {
+  font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Utility Classes for Inner Pages */
+
+/* Clinical Navy Blue - Headers, Navigation, Main Branding */
+.inner-page .brand-primary {
+  background-color: #153057;
+  color: #FFFFFF;
+}
+
+.inner-page .brand-primary-text {
+  color: #153057;
+}
+
+.inner-page .brand-primary-border {
+  border-color: #153057;
+}
+
+/* Refined Gold/Amber - Premium Elements, Highlights (Use Sparingly) */
+.inner-page .brand-accent {
+  background-color: #c69c6d;
+  color: #153057;
+}
+
+.inner-page .brand-accent-text {
+  color: #c69c6d;
+}
+
+.inner-page .brand-accent-border {
+  border-color: #c69c6d;
+}
+
+/* Medical Light Gray - Secondary Text, Dividers */
+.inner-page .brand-secondary {
+  background-color: #bec1c4;
+  color: #153057;
+}
+
+.inner-page .brand-secondary-text {
+  color: #bec1c4;
+}
+
+.inner-page .brand-secondary-border {
+  border-color: #bec1c4;
+}
+
+/* Soft Clinical White - Background */
+.inner-page .brand-bg {
+  background-color: #F7F9FC;
+}
+
+/* Pure White - Cards, Highlighted Sections */
+.inner-page .brand-card {
+  background-color: #FFFFFF;
+  color: #153057;
+  border: 1px solid rgba(190, 193, 196, 0.4);
+}
+
+/* Premium Button - Gold Accent */
+.inner-page .btn-premium {
+  background-color: #c69c6d;
+  color: #153057;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  border: 1px solid #c69c6d;
+}
+
+.inner-page .btn-premium:hover {
+  background-color: #b38b5e;
+  border-color: #b38b5e;
+}
+
+/* Primary Button - Navy Blue */
+.inner-page .btn-primary {
+  background-color: #153057;
+  color: #FFFFFF;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  border: 1px solid #153057;
+}
+
+.inner-page .btn-primary:hover {
+  background-color: #0f2340;
+  border-color: #0f2340;
+}
+
+/* Secondary Button - Light Gray */
+.inner-page .btn-secondary {
+  background-color: #bec1c4;
+  color: #153057;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  border: 1px solid #bec1c4;
+}
+
+.inner-page .btn-secondary:hover {
+  background-color: #a8acb0;
+  border-color: #a8acb0;
+}
+
+/* Premium Label/Badge */
+.inner-page .badge-premium {
+  background-color: #c69c6d;
+  color: #153057;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Navigation Bar Styles */
+.inner-page .nav-bar {
+  background-color: #153057;
+  color: #FFFFFF;
+  border-bottom: 2px solid #c69c6d;
+}
+
+/* Card with Gold Accent Border */
+.inner-page .card-premium {
+  background-color: #FFFFFF;
+  border: 2px solid #c69c6d;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(21, 48, 87, 0.1);
+}
+
+/* Divider - Light Gray */
+.inner-page .divider {
+  border-color: #bec1c4;
+  opacity: 0.5;
+}
+
+/* Section with Clinical White Background */
+.inner-page .section-bg {
+  background-color: #F7F9FC;
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+/* Typography Utilities */
+.inner-page .heading-serif {
+  font-family: 'The Seasons', Georgia, 'Times New Roman', serif;
+}
+
+.inner-page .text-sans {
+  font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Focus States with Gold Ring */
+.inner-page .focus-ring:focus-visible,
+.inner-page button:focus-visible,
+.inner-page a:focus-visible,
+.inner-page input:focus-visible,
+.inner-page textarea:focus-visible,
+.inner-page select:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #c69c6d;
+  border-radius: 0.25rem;
+}
