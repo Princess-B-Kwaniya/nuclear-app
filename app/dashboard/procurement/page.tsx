@@ -246,7 +246,7 @@ export default function ProcurementPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {requests.map((request) => (
+              {procurementRequests.map((request) => (
                 <tr key={request.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-mono">{request.id}</td>
                   <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm">{request.isotope}</td>
