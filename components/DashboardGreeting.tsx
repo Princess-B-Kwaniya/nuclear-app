@@ -70,7 +70,7 @@ export default function DashboardGreeting() {
       <div className="rounded-xl p-4 sm:p-6 lg:p-8" style={{ backgroundColor: 'var(--primary)' }}>
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
-            <h2 className="text-xl sm:text-2xl lg:text-3xl mb-2 text-white">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl mb-2" style={{ color: '#ffffff' }}>
               {greeting}, {userName}
             </h2>
             <p className="text-white/80 text-sm sm:text-base">{currentDate}</p>
