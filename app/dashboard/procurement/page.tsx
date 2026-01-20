@@ -588,8 +588,7 @@ export default function ProcurementPage() {
         </MobileOnly>
 
         {/* Pagination */}
-        <div className="px-4 sm:px-6 py-4 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="text-sm text-muted-foreground">Showing 1-4 of 4</div>
+        <div className="px-4 sm:px-6 py-4 border-t border-border flex flex-col sm:flex-row items-center justify-end gap-3">
           <div className="flex items-center gap-2">
             <button type="button" className="px-3 py-1 border border-input rounded hover:bg-muted transition-colors text-sm min-h-[44px]">Previous</button>
             <button type="button" className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm min-h-[44px]">1</button>
