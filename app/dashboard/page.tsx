@@ -1,8 +1,4 @@
 import {
-  Package,
-  Clock,
-  CheckCircle,
-  TrendingUp,
   ArrowRight
 } from 'lucide-react'
 import {
@@ -27,41 +23,6 @@ import {
 export default async function DashboardPage() {
 
   // MOCK DATA FOR DASHBOARD
-  const stats = [
-    {
-      label: 'Active Shipments',
-      value: 5,
-      subtext: '5 shipments in progress',
-      icon: Package,
-      color: 'from-blue-500 to-blue-600',
-      textColor: 'text-blue-600'
-    },
-    {
-      label: 'Pending Requests',
-      value: 2,
-      subtext: '2 requests awaiting quotes',
-      icon: Clock,
-      color: 'from-amber-500 to-amber-600',
-      textColor: 'text-amber-600'
-    },
-    {
-      label: 'Compliance Status',
-      value: '1 Alert',
-      subtext: '1 compliance alert',
-      icon: CheckCircle,
-      color: 'from-green-500 to-green-600',
-      textColor: 'text-green-600'
-    },
-    {
-      label: 'Monthly Total',
-      value: 'R 1,200,000',
-      subtext: 'This month',
-      icon: TrendingUp,
-      color: 'from-purple-500 to-purple-600',
-      textColor: 'text-purple-600'
-    },
-  ];
-
   const recentActivity = [
     { id: 1, event: 'Shipment SH-2851 dispatched from Johannesburg', time: '5 min ago' },
     { id: 2, event: 'Compliance alert issued for SH-2850', time: '30 min ago' },
@@ -107,25 +68,6 @@ export default async function DashboardPage() {
     <div className="space-y-6 lg:space-y-8">
       {/* Welcome Banner + Quick Actions */}
       <DashboardGreeting />
-
-      {/* Key Metrics */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-        {stats.map((stat, index) => {
-          const Icon = stat.icon
-          return (
-            <div key={index} className="bg-card rounded-xl p-4 sm:p-6 border border-border hover:shadow-lg transition-shadow">
-              <div className="flex items-start justify-between mb-4">
-                <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center`}>
-                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                </div>
-              </div>
-              <div className="text-2xl sm:text-3xl font-sans mb-1 text-foreground">{stat.value}</div>
-              <div className="text-xs sm:text-sm text-muted-foreground mb-2">{stat.label}</div>
-              <div className={`text-xs sm:text-sm ${stat.textColor}`}>{stat.subtext}</div>
-            </div>
-          )
-        })}
-      </div>
 
       {/* Live Shipment Map + Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-6">
