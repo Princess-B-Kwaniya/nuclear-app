@@ -22,6 +22,12 @@ const config: Config = {
           '"Courier New"',
           'monospace',
         ],
+        renova: [
+          '"Renova"',
+          '"Playfair Display"',
+          'Georgia',
+          'serif',
+        ],
         heading: [
           '"Inter"',
           '"Source Code Pro"',

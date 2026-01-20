@@ -15,6 +15,9 @@
 
 /* Inner Page Scope - Apply Tech Theme */
 .inner-page {
+  /* Use Renova font for all text in inner pages */
+  font-family: 'Renova', 'Playfair Display', Georgia, serif;
+  
   /* Tech Theme Primary - Glow Navy Blue */
   --primary: #153057;
   --primary-foreground: #ffffff;
