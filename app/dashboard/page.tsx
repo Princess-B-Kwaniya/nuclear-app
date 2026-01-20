@@ -83,7 +83,7 @@ export default async function DashboardPage() {
   ];
 
   const upcomingDeliveries = [
-    { id: 'DEL-1001', date: '2026-01-21', time: '09:00', isotope: 'Tc-99m', destination: 'Cape Town', status: 'upcoming' },
+    { id: 'DEL-1001', date: '2026-01-21', time: '09:00', isotope: 'Tc-99m', destination: 'Cape Town', status: 'upcoming' as const },
   ];
 
   const getStatusColor = (status: string): string => {
