@@ -1,82 +1,99 @@
 /**
- * Inner Pages Brand Styles
+ * Inner Pages Tech Theme Styles
  * 
- * This stylesheet defines the NuClear brand colors and typography
+ * This stylesheet defines the tech-themed colors and typography
  * specifically for inner pages (dashboard, login, settings, etc.).
  * 
  * The home page (landing page) maintains its own styling and is NOT affected.
+ * 
+ * Design Brief:
+ * - Light theme with black/white shades
+ * - Primary glow: #153057
+ * - Source Code Pro / JetBrains Mono fonts
+ * - Tech feel with subtle glow effects
  */
 
-/* Inner Page Scope - Apply NuClear Brand Colors */
+/* Inner Page Scope - Apply Tech Theme */
 .inner-page {
-  /* NuClear Brand Color Palette */
-  
-  /* Primary – Clinical Navy Blue (#153057) - Trust & Scientific Authority */
+  /* Tech Theme Primary - Glow Navy Blue */
   --primary: #153057;
-  --primary-foreground: #FFFFFF;
+  --primary-foreground: #ffffff;
+  --primary-glow: rgba(21, 48, 87, 0.4);
+  --primary-glow-strong: rgba(21, 48, 87, 0.6);
   
-  /* Accent – Refined Gold/Amber (#c69c6d) - Quality & Precision */
-  --accent: #c69c6d;
-  --accent-foreground: #153057;
+  /* Black & White Shades */
+  --gray-900: #1a1a1a;
+  --gray-800: #2a2a2a;
+  --gray-700: #3a3a3a;
+  --gray-600: #4a4a4a;
+  --gray-500: #6a6a6a;
+  --gray-400: #8a8a8a;
+  --gray-300: #aaaaaa;
+  --gray-200: #d0d0d0;
+  --gray-100: #e8e8e8;
+  --gray-50: #f5f5f5;
   
-  /* Neutral Support – Medical Light Gray (#bec1c4) */
-  --neutral-gray: #bec1c4;
-  --secondary: #bec1c4;
-  --secondary-foreground: #153057;
+  /* Secondary - Grayscale */
+  --accent: #1e4a7d;
+  --accent-foreground: #ffffff;
+  --secondary: #d0d0d0;
+  --secondary-foreground: #2a2a2a;
   
-  /* Base – Soft Clinical White (#F7F9FC) - Clean, Sterile, Modern Canvas */
-  --background: #F7F9FC;
+  /* Base - Clean White */
+  --background: #ffffff;
   
   /* Foreground & Text Colors */
-  --foreground: #153057;
-  --muted-foreground: rgba(21, 48, 87, 0.7);
+  --foreground: #1a1a1a;
+  --muted-foreground: #6a6a6a;
   
-  /* Card & Surface Colors – Pure White (#FFFFFF) - Extra Contrast */
-  --card: #FFFFFF;
-  --card-foreground: #153057;
+  /* Card & Surface Colors */
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
   
   /* Popover Colors */
-  --popover: #FFFFFF;
-  --popover-foreground: #153057;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
   
   /* Muted Backgrounds */
-  --muted: rgba(190, 193, 196, 0.3);
+  --muted: #f5f5f5;
   
   /* Borders & Inputs */
-  --border: rgba(190, 193, 196, 0.4);
-  --input: #bec1c4;
-  --input-background: #FFFFFF;
+  --border: #d0d0d0;
+  --input: #d0d0d0;
+  --input-background: #ffffff;
   
-  /* Focus Ring - Refined Gold */
-  --ring: #c69c6d;
+  /* Focus Ring - Primary Glow */
+  --ring: #153057;
   
-  /* Chart Colors - NuClear Palette */
+  /* Chart Colors - Monochrome with Primary accent */
   --chart-1: #153057;
-  --chart-2: #bec1c4;
-  --chart-3: #c69c6d;
-  --chart-4: #F7F9FC;
-  --chart-5: #FFFFFF;
+  --chart-2: #4a4a4a;
+  --chart-3: #1e4a7d;
+  --chart-4: #8a8a8a;
+  --chart-5: #aaaaaa;
   
   /* Sidebar Colors */
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #153057;
+  --sidebar: #f5f5f5;
+  --sidebar-foreground: #1a1a1a;
   --sidebar-primary: #153057;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: rgba(190, 193, 196, 0.3);
-  --sidebar-accent-foreground: #153057;
-  --sidebar-border: rgba(190, 193, 196, 0.4);
-  --sidebar-ring: #c69c6d;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e8e8e8;
+  --sidebar-accent-foreground: #1a1a1a;
+  --sidebar-border: #d0d0d0;
+  --sidebar-ring: #153057;
   
   /* Apply background color */
   background-color: var(--background);
   color: var(--foreground);
 }
 
-/* Typography for Inner Pages */
+/* Typography for Inner Pages - Tech Fonts */
 .inner-page h1,
 .inner-page h2 {
-  font-family: 'The Seasons', Georgia, 'Times New Roman', serif;
-  color: var(--primary);
+  font-family: 'Inter', 'Source Code Pro', system-ui, sans-serif;
+  color: var(--foreground);
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .inner-page h3,
@@ -88,15 +105,23 @@
 .inner-page div,
 .inner-page label,
 .inner-page button {
-  font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Source Code Pro', 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Monospace elements */
+.inner-page code,
+.inner-page pre,
+.inner-page .font-mono {
+  font-family: 'JetBrains Mono', 'Source Code Pro', ui-monospace, monospace;
 }
 
 /* Utility Classes for Inner Pages */
 
-/* Clinical Navy Blue - Headers, Navigation, Main Branding */
+/* Primary Navy Blue with Glow */
 .inner-page .brand-primary {
   background-color: #153057;
-  color: #FFFFFF;
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(21, 48, 87, 0.4);
 }
 
 .inner-page .brand-primary-text {
@@ -107,144 +132,141 @@
   border-color: #153057;
 }
 
-/* Refined Gold/Amber - Premium Elements, Highlights (Use Sparingly) */
+/* Accent - Lighter Navy */
 .inner-page .brand-accent {
-  background-color: #c69c6d;
-  color: #153057;
+  background-color: #1e4a7d;
+  color: #ffffff;
 }
 
 .inner-page .brand-accent-text {
-  color: #c69c6d;
+  color: #1e4a7d;
 }
 
 .inner-page .brand-accent-border {
-  border-color: #c69c6d;
+  border-color: #1e4a7d;
 }
 
-/* Medical Light Gray - Secondary Text, Dividers */
+/* Gray Shades */
 .inner-page .brand-secondary {
-  background-color: #bec1c4;
-  color: #153057;
+  background-color: #d0d0d0;
+  color: #1a1a1a;
 }
 
 .inner-page .brand-secondary-text {
-  color: #bec1c4;
+  color: #6a6a6a;
 }
 
 .inner-page .brand-secondary-border {
-  border-color: #bec1c4;
+  border-color: #d0d0d0;
 }
 
-/* Soft Clinical White - Background */
+/* White Background */
 .inner-page .brand-bg {
-  background-color: #F7F9FC;
+  background-color: #ffffff;
 }
 
-/* Pure White - Cards, Highlighted Sections */
+/* Tech Card with subtle border */
 .inner-page .brand-card {
-  background-color: #FFFFFF;
-  color: #153057;
-  border: 1px solid rgba(190, 193, 196, 0.4);
+  background-color: #ffffff;
+  color: #1a1a1a;
+  border: 1px solid #d0d0d0;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* Premium Button - Gold Accent */
-.inner-page .btn-premium {
-  background-color: #c69c6d;
-  color: #153057;
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.375rem;
-  font-weight: 500;
-  transition: all 0.2s;
-  border: 1px solid #c69c6d;
+.inner-page .brand-card:hover {
+  border-color: #153057;
+  box-shadow: 0 0 15px rgba(21, 48, 87, 0.2);
 }
 
-.inner-page .btn-premium:hover {
-  background-color: #b38b5e;
-  border-color: #b38b5e;
-}
-
-/* Primary Button - Navy Blue */
+/* Tech Primary Button with Glow */
+.inner-page .btn-premium,
 .inner-page .btn-primary {
   background-color: #153057;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 0.5rem 1.5rem;
-  border-radius: 0.375rem;
+  border-radius: 0.5rem;
   font-weight: 500;
   transition: all 0.2s;
   border: 1px solid #153057;
+  box-shadow: 0 2px 10px rgba(21, 48, 87, 0.3);
 }
 
+.inner-page .btn-premium:hover,
 .inner-page .btn-primary:hover {
-  background-color: #0f2340;
-  border-color: #0f2340;
+  background-color: #1e4a7d;
+  border-color: #1e4a7d;
+  box-shadow: 0 4px 20px rgba(21, 48, 87, 0.5);
+  transform: translateY(-1px);
 }
 
-/* Secondary Button - Light Gray */
+/* Secondary Button - Gray */
 .inner-page .btn-secondary {
-  background-color: #bec1c4;
-  color: #153057;
+  background-color: #f5f5f5;
+  color: #1a1a1a;
   padding: 0.5rem 1.5rem;
-  border-radius: 0.375rem;
+  border-radius: 0.5rem;
   font-weight: 500;
   transition: all 0.2s;
-  border: 1px solid #bec1c4;
+  border: 1px solid #d0d0d0;
 }
 
 .inner-page .btn-secondary:hover {
-  background-color: #a8acb0;
-  border-color: #a8acb0;
+  background-color: #e8e8e8;
+  border-color: #aaaaaa;
 }
 
-/* Premium Label/Badge */
+/* Tech Badge */
 .inner-page .badge-premium {
-  background-color: #c69c6d;
+  background-color: rgba(21, 48, 87, 0.1);
   color: #153057;
   padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
+  border-radius: 0.25rem;
   font-size: 0.75rem;
   font-weight: 600;
   display: inline-block;
+  border: 1px solid rgba(21, 48, 87, 0.2);
 }
 
-/* Navigation Bar Styles */
+/* Navigation Bar Styles - Tech Theme */
 .inner-page .nav-bar {
-  background-color: #153057;
-  color: #FFFFFF;
-  border-bottom: 2px solid #c69c6d;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  border-bottom: 1px solid #d0d0d0;
 }
 
-/* Card with Gold Accent Border */
+/* Card with Glow Border */
 .inner-page .card-premium {
-  background-color: #FFFFFF;
-  border: 2px solid #c69c6d;
+  background-color: #ffffff;
+  border: 1px solid #153057;
   border-radius: 0.5rem;
   padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(21, 48, 87, 0.1);
+  box-shadow: 0 0 20px rgba(21, 48, 87, 0.15);
 }
 
-/* Divider - Light Gray */
+/* Divider - Gray */
 .inner-page .divider {
-  border-color: #bec1c4;
+  border-color: #d0d0d0;
   opacity: 0.5;
 }
 
-/* Section with Clinical White Background */
+/* Section with Gray Background */
 .inner-page .section-bg {
-  background-color: #F7F9FC;
+  background-color: #f5f5f5;
   padding: 2rem;
   border-radius: 0.5rem;
 }
 
 /* Typography Utilities */
 .inner-page .heading-serif {
-  font-family: 'The Seasons', Georgia, 'Times New Roman', serif;
+  font-family: 'Inter', 'Source Code Pro', system-ui, sans-serif;
+  font-weight: 600;
 }
 
 .inner-page .text-sans {
-  font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Source Code Pro', 'JetBrains Mono', ui-monospace, monospace;
 }
 
-/* Focus States with Gold Ring */
+/* Focus States with Primary Glow */
 .inner-page .focus-ring:focus-visible,
 .inner-page button:focus-visible,
 .inner-page a:focus-visible,
@@ -252,6 +274,77 @@
 .inner-page textarea:focus-visible,
 .inner-page select:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #c69c6d;
+  box-shadow: 0 0 0 3px rgba(21, 48, 87, 0.4);
   border-radius: 0.25rem;
+}
+
+/* Tech-specific utilities */
+.inner-page .glow-effect {
+  box-shadow: 0 0 20px rgba(21, 48, 87, 0.4);
+}
+
+.inner-page .glow-effect-strong {
+  box-shadow: 0 0 30px rgba(21, 48, 87, 0.6);
+}
+
+.inner-page .border-glow {
+  border: 1px solid #153057;
+  box-shadow: 0 0 10px rgba(21, 48, 87, 0.3), inset 0 0 10px rgba(21, 48, 87, 0.1);
+}
+
+/* Data/Table styling */
+.inner-page .data-row {
+  border-bottom: 1px solid #e8e8e8;
+  transition: all 0.15s;
+}
+
+.inner-page .data-row:hover {
+  background-color: #f5f5f5;
+  box-shadow: inset 3px 0 0 #153057;
+}
+
+/* Status indicators with glow */
+.inner-page .status-active {
+  color: #16a34a;
+}
+
+.inner-page .status-active::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #16a34a;
+  margin-right: 8px;
+  box-shadow: 0 0 8px #16a34a;
+}
+
+.inner-page .status-warning {
+  color: #ca8a04;
+}
+
+.inner-page .status-warning::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ca8a04;
+  margin-right: 8px;
+  box-shadow: 0 0 8px #ca8a04;
+}
+
+.inner-page .status-error {
+  color: #dc2626;
+}
+
+.inner-page .status-error::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #dc2626;
+  margin-right: 8px;
+  box-shadow: 0 0 8px #dc2626;
 }

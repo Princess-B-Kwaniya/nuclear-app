@@ -5,83 +5,104 @@
 :root {
   --font-size: 16px;
   
-  /* Base Colors - NuClear Brand */
-  --nuclear-navy: #153057;
-  --nuclear-gold: #c69c6d;
-  --nuclear-gray: #bec1c4;
-  --nuclear-white-soft: #F7F9FC;
-  --nuclear-white-pure: #FFFFFF;
+  /* Tech Theme - Primary Glow Color */
+  --tech-primary: #153057;
+  --tech-primary-light: #1e4a7d;
+  --tech-primary-glow: rgba(21, 48, 87, 0.4);
+  --tech-primary-glow-strong: rgba(21, 48, 87, 0.6);
   
-  /* NuClear Brand Color Palette */
+  /* Black & White Shades */
+  --tech-black: #0a0a0a;
+  --tech-gray-900: #1a1a1a;
+  --tech-gray-800: #2a2a2a;
+  --tech-gray-700: #3a3a3a;
+  --tech-gray-600: #4a4a4a;
+  --tech-gray-500: #6a6a6a;
+  --tech-gray-400: #8a8a8a;
+  --tech-gray-300: #aaaaaa;
+  --tech-gray-200: #d0d0d0;
+  --tech-gray-100: #e8e8e8;
+  --tech-gray-50: #f5f5f5;
+  --tech-white: #ffffff;
   
-  /* Primary – Clinical Navy Blue (Trust & Scientific Authority) */
-  --primary: var(--nuclear-navy);
-  --primary-foreground: var(--nuclear-white-pure);
+  /* Primary – Tech Navy Blue with Glow */
+  --primary: var(--tech-primary);
+  --primary-foreground: var(--tech-white);
   
-  /* Accent – Refined Gold/Amber (Quality & Precision) */
-  --accent: var(--nuclear-gold);
-  --accent-foreground: var(--nuclear-navy);
+  /* Accent – Subtle blue glow */
+  --accent: var(--tech-primary-light);
+  --accent-foreground: var(--tech-white);
   
-  /* Neutral Support – Medical Light Gray */
-  --neutral-gray: var(--nuclear-gray);
+  /* Secondary – Gray tones */
+  --secondary: var(--tech-gray-200);
+  --secondary-foreground: var(--tech-gray-800);
   
-  /* Secondary Support – Medical Light Gray (for secondary text, dividers, UI balance) */
-  --secondary: var(--nuclear-gray);
-  --secondary-foreground: var(--nuclear-navy);
-  
-  /* Base – Soft Clinical White (Clean, Sterile, Modern Canvas) */
-  --background: var(--nuclear-white-soft);
+  /* Background – Clean white */
+  --background: var(--tech-white);
   
   /* Foreground & Text Colors */
-  --foreground: var(--nuclear-navy);
-  --muted-foreground: rgba(21, 48, 87, 0.7);
+  --foreground: var(--tech-gray-900);
+  --muted-foreground: var(--tech-gray-500);
   
-  /* Card & Surface Colors – Pure White (Extra Contrast) */
-  --card: var(--nuclear-white-pure);
-  --card-foreground: var(--nuclear-navy);
+  /* Card & Surface Colors */
+  --card: var(--tech-white);
+  --card-foreground: var(--tech-gray-900);
   
   /* Popover Colors */
-  --popover: var(--nuclear-white-pure);
-  --popover-foreground: var(--nuclear-navy);
+  --popover: var(--tech-white);
+  --popover-foreground: var(--tech-gray-900);
   
   /* Muted Backgrounds */
-  --muted: rgba(190, 193, 196, 0.3);
+  --muted: var(--tech-gray-100);
   
   /* Destructive */
-  --destructive: #d4183d;
-  --destructive-foreground: var(--nuclear-white-pure);
+  --destructive: #dc2626;
+  --destructive-foreground: var(--tech-white);
+  
+  /* Success */
+  --success: #16a34a;
+  --success-foreground: var(--tech-white);
+  
+  /* Warning */
+  --warning: #ca8a04;
+  --warning-foreground: var(--tech-white);
   
   /* Borders & Inputs */
-  --border: rgba(190, 193, 196, 0.4);
-  --input: var(--nuclear-gray);
-  --input-background: var(--nuclear-white-pure);
+  --border: var(--tech-gray-200);
+  --input: var(--tech-gray-200);
+  --input-background: var(--tech-white);
   
-  /* Focus Ring - Refined Gold */
-  --ring: var(--nuclear-gold);
+  /* Focus Ring - Primary Glow */
+  --ring: var(--tech-primary);
   
-  /* Chart Colors - NuClear Palette */
-  --chart-1: var(--nuclear-navy);
-  --chart-2: var(--nuclear-gray);
-  --chart-3: var(--nuclear-gold);
-  --chart-4: var(--nuclear-white-soft);
-  --chart-5: var(--nuclear-white-pure);
+  /* Chart Colors - Tech Palette */
+  --chart-1: var(--tech-primary);
+  --chart-2: var(--tech-gray-600);
+  --chart-3: var(--tech-primary-light);
+  --chart-4: var(--tech-gray-400);
+  --chart-5: var(--tech-gray-300);
   
-  /* Border Radius - More minimal (4-6px) */
-  --radius: 0.375rem;
+  /* Border Radius - Sharp tech look */
+  --radius: 0.5rem;
   
   /* Sidebar Colors */
-  --sidebar: var(--nuclear-white-pure);
-  --sidebar-foreground: var(--nuclear-navy);
-  --sidebar-primary: var(--nuclear-navy);
-  --sidebar-primary-foreground: var(--nuclear-white-pure);
-  --sidebar-accent: rgba(190, 193, 196, 0.3);
-  --sidebar-accent-foreground: var(--nuclear-navy);
-  --sidebar-border: rgba(190, 193, 196, 0.4);
-  --sidebar-ring: var(--nuclear-gold);
+  --sidebar: var(--tech-gray-50);
+  --sidebar-foreground: var(--tech-gray-900);
+  --sidebar-primary: var(--tech-primary);
+  --sidebar-primary-foreground: var(--tech-white);
+  --sidebar-accent: var(--tech-gray-100);
+  --sidebar-accent-foreground: var(--tech-gray-900);
+  --sidebar-border: var(--tech-gray-200);
+  --sidebar-ring: var(--tech-primary);
   
   /* Font Weights */
   --font-weight-medium: 500;
   --font-weight-normal: 400;
+  
+  /* Glow Effects */
+  --glow-sm: 0 0 10px var(--tech-primary-glow);
+  --glow-md: 0 0 20px var(--tech-primary-glow);
+  --glow-lg: 0 0 30px var(--tech-primary-glow-strong);
 }
 
 @layer base {
@@ -93,6 +114,19 @@
     @apply bg-background text-foreground;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "liga" 1, "calt" 1;
+  }
+  
+  /* Headings with tech font styling */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Inter", "Source Code Pro", system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  
+  /* Code elements get monospace treatment */
+  code, pre, .font-mono {
+    font-family: "JetBrains Mono", "Source Code Pro", ui-monospace, monospace;
   }
   
   /* Prevent text size adjustment on iOS */
@@ -289,5 +323,151 @@ html {
   
   .grid-responsive-4 {
     @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6;
+  }
+  
+  /* Tech Theme Glow Effects */
+  .glow-primary {
+    box-shadow: var(--glow-sm);
+  }
+  
+  .glow-primary-md {
+    box-shadow: var(--glow-md);
+  }
+  
+  .glow-primary-lg {
+    box-shadow: var(--glow-lg);
+  }
+  
+  .hover-glow:hover {
+    box-shadow: var(--glow-md);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  /* Tech Border Glow */
+  .border-glow {
+    border: 1px solid var(--tech-primary);
+    box-shadow: 0 0 8px var(--tech-primary-glow), inset 0 0 8px var(--tech-primary-glow);
+  }
+  
+  /* Tech Button Styles */
+  .btn-tech {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+    background: var(--tech-primary);
+    color: var(--tech-white);
+    box-shadow: 0 2px 8px var(--tech-primary-glow);
+  }
+  
+  .btn-tech:hover {
+    box-shadow: 0 4px 16px var(--tech-primary-glow-strong);
+    transform: translateY(-1px);
+  }
+  
+  /* Tech Card */
+  .card-tech {
+    @apply rounded-lg border;
+    background: var(--tech-white);
+    border-color: var(--tech-gray-200);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .card-tech:hover {
+    border-color: var(--tech-primary);
+    box-shadow: var(--glow-sm);
+  }
+  
+  /* Tech Input Focus */
+  .input-tech:focus {
+    outline: none;
+    border-color: var(--tech-primary);
+    box-shadow: 0 0 0 3px var(--tech-primary-glow);
+  }
+  
+  /* Subtle grid background for tech feel */
+  .bg-grid-tech {
+    background-image: 
+      linear-gradient(to right, var(--tech-gray-100) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--tech-gray-100) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  
+  /* Tech Status Indicators */
+  .status-glow-active {
+    @apply relative;
+  }
+  
+  .status-glow-active::before {
+    content: '';
+    @apply absolute w-2 h-2 rounded-full bg-green-500;
+    box-shadow: 0 0 8px #22c55e;
+    animation: pulse-glow 2s infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px #22c55e; }
+    50% { opacity: 0.7; box-shadow: 0 0 16px #22c55e; }
+  }
+}
+
+/* Dashboard-specific tech styling */
+@layer components {
+  /* Tech-themed sidebar */
+  .sidebar-tech {
+    background: linear-gradient(180deg, var(--tech-gray-50) 0%, var(--tech-white) 100%);
+    border-right: 1px solid var(--tech-gray-200);
+  }
+  
+  /* Tech-themed navigation items */
+  .nav-item-tech {
+    @apply px-3 py-2 rounded-lg transition-all duration-200;
+    color: var(--tech-gray-600);
+  }
+  
+  .nav-item-tech:hover {
+    background: var(--tech-gray-100);
+    color: var(--tech-gray-900);
+  }
+  
+  .nav-item-tech.active {
+    background: var(--tech-primary);
+    color: var(--tech-white);
+    box-shadow: var(--glow-sm);
+  }
+  
+  /* Tech data table rows */
+  .table-row-tech {
+    @apply border-b transition-all duration-150;
+    border-color: var(--tech-gray-100);
+  }
+  
+  .table-row-tech:hover {
+    background: var(--tech-gray-50);
+    box-shadow: inset 3px 0 0 var(--tech-primary);
+  }
+  
+  /* Tech stat cards */
+  .stat-card-tech {
+    @apply p-4 rounded-lg border;
+    background: var(--tech-white);
+    border-color: var(--tech-gray-200);
+    transition: all 0.2s ease;
+  }
+  
+  .stat-card-tech:hover {
+    border-color: var(--tech-primary);
+    box-shadow: var(--glow-sm);
+  }
+  
+  /* Tech badges */
+  .badge-tech {
+    @apply px-2 py-1 rounded text-xs font-medium;
+    background: var(--tech-gray-100);
+    color: var(--tech-gray-700);
+    border: 1px solid var(--tech-gray-200);
+  }
+  
+  .badge-tech-primary {
+    background: rgba(21, 48, 87, 0.1);
+    color: var(--tech-primary);
+    border-color: var(--tech-primary);
   }
 }
