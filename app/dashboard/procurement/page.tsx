@@ -19,6 +19,16 @@ export default function ProcurementPage() {
     }
   }, [viewParam]);
 
+  const handleEdit = (request: any) => {
+    setEditingRequest(request);
+    setView('form');
+  };
+
+  const handleDelete = (id: string) => {
+    // Placeholder for delete functionality
+    console.log('Delete request:', id);
+  };
+
   const procurementRequests = [
     { 
       id: 'PR-2847', 
