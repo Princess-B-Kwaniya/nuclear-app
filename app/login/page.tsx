@@ -9,21 +9,11 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { AnimatedLogo } from '@/components'
 import { validateEmail, validatePassword, validatePasswordMatch } from '@/lib/utils/validation'
+import { AUTH_ERROR_MESSAGES } from '@/lib/utils/errors'
 
 // Demo credentials for testing
 const DEMO_EMAIL = 'demo@nuclear.app'
 const DEMO_PASSWORD = 'demo123456'
-
-// Error message mapping for URL parameters
-const ERROR_MESSAGES: Record<string, string> = {
-  'auth_callback_error': 'Authentication failed. Please try again.',
-  'access_denied': 'Access was denied. Please try signing up again.',
-  'link_expired': 'This link has expired. Please request a new one.',
-  'missing_code': 'Invalid authentication link. Please try again.',
-  'invalid_link': 'Invalid or expired authentication link.',
-  'no_session': 'Could not create session. Please try logging in.',
-  'unexpected_error': 'An unexpected error occurred. Please try again.',
-}
 
 export default function LoginPage() {
   const router = useRouter()
@@ -43,8 +33,8 @@ export default function LoginPage() {
     const errorParam = searchParams.get('error')
     const successParam = searchParams.get('success')
     
-    if (errorParam && ERROR_MESSAGES[errorParam]) {
-      setError(ERROR_MESSAGES[errorParam])
+    if (errorParam && AUTH_ERROR_MESSAGES[errorParam]) {
+      setError(AUTH_ERROR_MESSAGES[errorParam])
     }
     
     if (successParam === 'email_confirmed') {

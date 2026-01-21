@@ -106,3 +106,16 @@ export function isNetworkError(error: unknown): boolean {
   }
   return false
 }
+
+/**
+ * Error message mapping for auth callback URL parameters
+ */
+export const AUTH_ERROR_MESSAGES: Record<string, string> = {
+  'auth_callback_error': 'Authentication failed. Please try again.',
+  'access_denied': 'Access was denied. Please try signing up again.',
+  'link_expired': 'This link has expired. Please request a new one.',
+  'missing_code': 'Invalid authentication link. Please try again.',
+  'invalid_link': 'Invalid or expired authentication link.',
+  'no_session': 'Could not create session. Please try logging in.',
+  'unexpected_error': 'An unexpected error occurred. Please try again.',
+}

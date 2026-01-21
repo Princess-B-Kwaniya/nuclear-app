@@ -233,9 +233,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       
       // Handle custom errors
       if (error instanceof EmailConfirmationRequiredError) {
+        // Generate a temporary ID for the user pending confirmation
+        // This user object is informational only and won't be stored
+        const tempId = `pending-${Date.now()}`
         return { 
           success: true, 
-          user: createUserFromEmail(email, 'pending'),
+          user: createUserFromEmail(email, tempId),
           message: error.message 
         }
       }
