@@ -1,20 +1,33 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/contexts/auth.context'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { AnimatedLogo } from '@/components'
+import { validateEmail, validatePassword, validatePasswordMatch } from '@/lib/utils/validation'
 
 // Demo credentials for testing
 const DEMO_EMAIL = 'demo@nuclear.app'
 const DEMO_PASSWORD = 'demo123456'
 
+// Error message mapping for URL parameters
+const ERROR_MESSAGES: Record<string, string> = {
+  'auth_callback_error': 'Authentication failed. Please try again.',
+  'access_denied': 'Access was denied. Please try signing up again.',
+  'link_expired': 'This link has expired. Please request a new one.',
+  'missing_code': 'Invalid authentication link. Please try again.',
+  'invalid_link': 'Invalid or expired authentication link.',
+  'no_session': 'Could not create session. Please try logging in.',
+  'unexpected_error': 'An unexpected error occurred. Please try again.',
+}
+
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { login, signUp } = useAuth()
   
   const [email, setEmail] = useState('')
@@ -25,6 +38,20 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [isSignUp, setIsSignUp] = useState(false)
 
+  // Check for error or success messages in URL
+  useEffect(() => {
+    const errorParam = searchParams.get('error')
+    const successParam = searchParams.get('success')
+    
+    if (errorParam && ERROR_MESSAGES[errorParam]) {
+      setError(ERROR_MESSAGES[errorParam])
+    }
+    
+    if (successParam === 'email_confirmed') {
+      setMessage('Email confirmed successfully! You can now log in.')
+    }
+  }, [searchParams])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
@@ -32,33 +59,59 @@ export default function LoginPage() {
     setIsLoading(true)
     
     if (isSignUp) {
-      // Validate password match
-      if (password !== confirmPassword) {
-        setError('Passwords do not match')
-        setIsLoading(false)
-        return
-      }
-      
-      // Validate password strength
-      if (password.length < 6) {
-        setError('Password must be at least 6 characters')
+      // Client-side validation for signup
+      const emailValidation = validateEmail(email)
+      if (!emailValidation.valid) {
+        setError(emailValidation.error!)
         setIsLoading(false)
         return
       }
 
+      const passwordValidation = validatePassword(password)
+      if (!passwordValidation.valid) {
+        setError(passwordValidation.error!)
+        setIsLoading(false)
+        return
+      }
+
+      const matchValidation = validatePasswordMatch(password, confirmPassword)
+      if (!matchValidation.valid) {
+        setError(matchValidation.error!)
+        setIsLoading(false)
+        return
+      }
+
+      // Attempt signup
       const result = await signUp(email, password)
       
       if (result.success) {
         if (result.message) {
+          // Email confirmation required
           setMessage(result.message)
           setIsSignUp(false) // Switch to login view
         } else {
+          // Logged in immediately
           router.push('/dashboard')
         }
       } else {
         setError(result.error || 'Sign up failed')
       }
     } else {
+      // Client-side validation for login
+      const emailValidation = validateEmail(email)
+      if (!emailValidation.valid) {
+        setError(emailValidation.error!)
+        setIsLoading(false)
+        return
+      }
+
+      if (!password || password.trim().length === 0) {
+        setError('Password is required')
+        setIsLoading(false)
+        return
+      }
+
+      // Attempt login
       const result = await login(email, password)
       
       if (result.success) {
@@ -134,6 +187,8 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={isLoading}
+                aria-describedby={error ? "error-message" : undefined}
               />
             </div>
             <div className="space-y-2">
@@ -145,6 +200,8 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={isLoading}
+                aria-describedby={error ? "error-message" : undefined}
               />
             </div>
             {isSignUp && (
@@ -157,11 +214,28 @@ export default function LoginPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
+                  disabled={isLoading}
+                  aria-describedby={error ? "error-message" : undefined}
                 />
               </div>
             )}
-            {error && <p className="text-sm text-destructive">{error}</p>}
-            {message && <p className="text-sm text-green-600">{message}</p>}
+            {error && (
+              <div 
+                id="error-message"
+                className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md"
+                role="alert"
+              >
+                {error}
+              </div>
+            )}
+            {message && (
+              <div 
+                className="p-3 text-sm text-green-700 bg-green-50 border border-green-200 rounded-md"
+                role="status"
+              >
+                {message}
+              </div>
+            )}
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
             <Button type="submit" className="w-full" disabled={isLoading}>
@@ -176,6 +250,7 @@ export default function LoginPage() {
                 type="button"
                 onClick={toggleMode}
                 className="text-primary hover:underline font-medium"
+                disabled={isLoading}
               >
                 {isSignUp ? 'Sign In' : 'Sign Up'}
               </button>

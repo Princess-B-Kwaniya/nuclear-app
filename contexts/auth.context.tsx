@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { User, AuthResult } from '@/models'
+import { sanitizeErrorMessage, isNetworkError, EmailConfirmationRequiredError, AccountExistsError } from '@/lib/utils/errors'
 
 // Demo credentials
 const DEMO_EMAIL = 'demo@nuclear.app'
@@ -132,7 +133,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
 
       if (error) {
-        return { success: false, error: error.message }
+        // Provide more specific error messages
+        if (error.message.toLowerCase().includes('invalid login credentials')) {
+          return { success: false, error: 'Invalid email or password. Please check your credentials and try again.' }
+        }
+        
+        if (error.message.toLowerCase().includes('email not confirmed')) {
+          return { success: false, error: 'Please confirm your email address before logging in. Check your inbox for the confirmation link.' }
+        }
+        
+        return { success: false, error: sanitizeErrorMessage(error) }
       }
 
       if (data.user) {
@@ -145,7 +155,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return { success: false, error: 'Login failed. Please try again.' }
     } catch (error) {
       console.error('Login error:', error)
-      return { success: false, error: 'An unexpected error occurred. Please try again.' }
+      
+      // Check if it's a network error
+      if (isNetworkError(error)) {
+        return { success: false, error: 'Network error. Please check your internet connection and try again.' }
+      }
+      
+      return { success: false, error: sanitizeErrorMessage(error) }
     }
   }, [supabase.auth])
 
@@ -160,34 +176,80 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
 
       if (error) {
-        return { success: false, error: error.message }
+        // Handle specific Supabase error cases
+        if (error.message.toLowerCase().includes('user already registered')) {
+          throw new AccountExistsError()
+        }
+        
+        if (error.message.toLowerCase().includes('password')) {
+          return { success: false, error: 'Password must be at least 6 characters long.' }
+        }
+        
+        if (error.message.toLowerCase().includes('email')) {
+          return { success: false, error: 'Invalid email format. Please enter a valid email address.' }
+        }
+        
+        if (error.message.toLowerCase().includes('rate limit')) {
+          return { success: false, error: 'Too many signup attempts. Please try again in a few minutes.' }
+        }
+        
+        return { success: false, error: sanitizeErrorMessage(error) }
       }
 
       if (data.user) {
         // Check if email confirmation is required
+        // If identities array is empty, the user already exists
         if (data.user.identities && data.user.identities.length === 0) {
-          return { success: false, error: 'An account with this email already exists.' }
+          throw new AccountExistsError()
         }
         
-        // If email confirmation is required, inform the user
+        // If email confirmation is required (no session returned)
         if (!data.session) {
-          return { 
-            success: true, 
-            user: createUserFromEmail(email, data.user.id),
-            message: 'Please check your email to confirm your account.'
-          }
+          const appUser = createUserFromEmail(email, data.user.id)
+          throw new EmailConfirmationRequiredError(
+            'Account created successfully! Please check your email to confirm your account before logging in.'
+          )
         }
 
+        // Email confirmation is disabled - user is logged in immediately
         const appUser = createUserFromEmail(data.user.email || '', data.user.id)
         setUser(appUser)
         localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(appUser))
-        return { success: true, user: appUser }
+        
+        if (process.env.NODE_ENV === 'development') {
+          console.log('✅ Signup successful for user:', data.user.email)
+        }
+        
+        return { 
+          success: true, 
+          user: appUser,
+          message: 'Account created successfully! You are now logged in.'
+        }
       }
 
       return { success: false, error: 'Sign up failed. Please try again.' }
     } catch (error) {
       console.error('Sign up error:', error)
-      return { success: false, error: 'An unexpected error occurred. Please try again.' }
+      
+      // Handle custom errors
+      if (error instanceof EmailConfirmationRequiredError) {
+        return { 
+          success: true, 
+          user: createUserFromEmail(email, 'pending'),
+          message: error.message 
+        }
+      }
+      
+      if (error instanceof AccountExistsError) {
+        return { success: false, error: error.message }
+      }
+      
+      // Check if it's a network error
+      if (isNetworkError(error)) {
+        return { success: false, error: 'Network error. Please check your internet connection and try again.' }
+      }
+      
+      return { success: false, error: sanitizeErrorMessage(error) }
     }
   }, [supabase.auth])
 
@@ -220,13 +282,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
 
       if (error) {
-        return { success: false, error: error.message }
+        if (error.message.toLowerCase().includes('rate limit')) {
+          return { success: false, error: 'Too many password reset attempts. Please try again in a few minutes.' }
+        }
+        
+        return { success: false, error: sanitizeErrorMessage(error) }
       }
 
       return { success: true }
     } catch (error) {
       console.error('Password reset error:', error)
-      return { success: false, error: 'An unexpected error occurred. Please try again.' }
+      
+      if (isNetworkError(error)) {
+        return { success: false, error: 'Network error. Please check your internet connection and try again.' }
+      }
+      
+      return { success: false, error: sanitizeErrorMessage(error) }
     }
   }, [supabase.auth])
 
