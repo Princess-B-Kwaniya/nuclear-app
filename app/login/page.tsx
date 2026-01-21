@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/contexts/auth.context'
 import { Button } from '@/components/ui/button'
@@ -15,7 +15,7 @@ import { AUTH_ERROR_MESSAGES } from '@/lib/utils/errors'
 const DEMO_EMAIL = 'demo@nuclear.app'
 const DEMO_PASSWORD = 'demo123456'
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { login, signUp } = useAuth()
@@ -249,5 +249,25 @@ export default function LoginPage() {
         </form>
       </Card>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="inner-page min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <Card className="w-full max-w-md">
+          <CardHeader className="text-center">
+            <div className="flex justify-center mb-2">
+              <AnimatedLogo size="md" />
+            </div>
+            <CardTitle>Loading...</CardTitle>
+            <CardDescription>Nuclear Supply Chain Management</CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   )
 }
