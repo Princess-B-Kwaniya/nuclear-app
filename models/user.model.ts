@@ -25,4 +25,5 @@ export interface AuthResult {
   success: boolean
   user?: User
   error?: string
+  message?: string
 }

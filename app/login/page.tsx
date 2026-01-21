@@ -15,24 +15,57 @@ const DEMO_PASSWORD = 'demo123456'
 
 export default function LoginPage() {
   const router = useRouter()
-  const { login } = useAuth()
+  const { login, signUp } = useAuth()
   
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isSignUp, setIsSignUp] = useState(false)
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    setMessage('')
     setIsLoading(true)
     
-    const result = await login(email, password)
-    
-    if (result.success) {
-      router.push('/dashboard')
+    if (isSignUp) {
+      // Validate password match
+      if (password !== confirmPassword) {
+        setError('Passwords do not match')
+        setIsLoading(false)
+        return
+      }
+      
+      // Validate password strength
+      if (password.length < 6) {
+        setError('Password must be at least 6 characters')
+        setIsLoading(false)
+        return
+      }
+
+      const result = await signUp(email, password)
+      
+      if (result.success) {
+        if (result.message) {
+          setMessage(result.message)
+          setIsSignUp(false) // Switch to login view
+        } else {
+          router.push('/dashboard')
+        }
+      } else {
+        setError(result.error || 'Sign up failed')
+      }
     } else {
-      setError(result.error || 'Login failed')
+      const result = await login(email, password)
+      
+      if (result.success) {
+        router.push('/dashboard')
+      } else {
+        setError(result.error || 'Login failed')
+      }
     }
     setIsLoading(false)
   }
@@ -40,7 +73,17 @@ export default function LoginPage() {
   const useDemoCredentials = () => {
     setEmail(DEMO_EMAIL)
     setPassword(DEMO_PASSWORD)
+    setConfirmPassword('')
     setError('')
+    setMessage('')
+    setIsSignUp(false)
+  }
+
+  const toggleMode = () => {
+    setIsSignUp(!isSignUp)
+    setError('')
+    setMessage('')
+    setConfirmPassword('')
   }
 
   return (
@@ -50,34 +93,37 @@ export default function LoginPage() {
           <div className="flex justify-center mb-2">
             <AnimatedLogo size="md" />
           </div>
+          <CardTitle>{isSignUp ? 'Create Account' : 'Welcome Back'}</CardTitle>
           <CardDescription>Nuclear Supply Chain Management</CardDescription>
         </CardHeader>
         
-        {/* Demo Credentials Info */}
-        <div className="mx-4 mb-4 p-4 bg-muted rounded-lg border">
-          <div className="flex items-start gap-2">
-            <div className="flex-1">
-              <p className="text-sm font-medium mb-2">Demo Credentials</p>
-              <p className="text-xs text-muted-foreground mb-1">
-                <span className="font-medium">Email:</span> {DEMO_EMAIL}
-              </p>
-              <p className="text-xs text-muted-foreground mb-3">
-                <span className="font-medium">Password:</span> {DEMO_PASSWORD}
-              </p>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full"
-                onClick={useDemoCredentials}
-                type="button"
-              >
-                Use Demo Credentials
-              </Button>
+        {/* Demo Credentials Info - Only show on login */}
+        {!isSignUp && (
+          <div className="mx-4 mb-4 p-4 bg-muted rounded-lg border">
+            <div className="flex items-start gap-2">
+              <div className="flex-1">
+                <p className="text-sm font-medium mb-2">Demo Credentials</p>
+                <p className="text-xs text-muted-foreground mb-1">
+                  <span className="font-medium">Email:</span> {DEMO_EMAIL}
+                </p>
+                <p className="text-xs text-muted-foreground mb-3">
+                  <span className="font-medium">Password:</span> {DEMO_PASSWORD}
+                </p>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full"
+                  onClick={useDemoCredentials}
+                  type="button"
+                >
+                  Use Demo Credentials
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
         
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -95,17 +141,45 @@ export default function LoginPage() {
               <Input
                 id="password"
                 type="password"
+                placeholder={isSignUp ? 'At least 6 characters' : ''}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
+            {isSignUp && (
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+            )}
             {error && <p className="text-sm text-destructive">{error}</p>}
+            {message && <p className="text-sm text-green-600">{message}</p>}
           </CardContent>
-          <CardFooter>
+          <CardFooter className="flex flex-col gap-4">
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {isLoading 
+                ? (isSignUp ? 'Creating account...' : 'Signing in...') 
+                : (isSignUp ? 'Create Account' : 'Sign In')
+              }
             </Button>
+            <p className="text-sm text-center text-muted-foreground">
+              {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
+              <button
+                type="button"
+                onClick={toggleMode}
+                className="text-primary hover:underline font-medium"
+              >
+                {isSignUp ? 'Sign In' : 'Sign Up'}
+              </button>
+            </p>
           </CardFooter>
         </form>
       </Card>
