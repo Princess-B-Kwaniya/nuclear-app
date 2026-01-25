@@ -170,8 +170,7 @@ export default function ReportsPage() {
                 borderColor: 'var(--color-border)',
                 backgroundColor: 'var(--color-bg-white)',
                 color: 'var(--color-text-main)',
-                borderRadius: 'var(--radius-md)',
-                focusRingColor: 'var(--color-primary)'
+                borderRadius: 'var(--radius-md)'
               }}
             >
               <option>Shipment Performance</option>
