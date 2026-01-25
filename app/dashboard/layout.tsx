@@ -365,8 +365,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   borderColor: 'var(--color-border)', 
                   color: 'var(--color-text-muted)', 
                   backgroundColor: 'var(--color-bg-subtle)',
-                  borderRadius: 'var(--radius-md)',
-                  focusRingColor: 'var(--color-primary)'
+                  borderRadius: 'var(--radius-md)'
                 }}
                 disabled
               />
