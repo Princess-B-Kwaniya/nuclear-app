@@ -175,7 +175,7 @@ export default function LandingPage() {
         
         .nav-links {
           display: flex;
-          gap: 40px;
+          gap: 48px;
           align-items: center;
         }
         
@@ -185,6 +185,7 @@ export default function LandingPage() {
           color: var(--color-text-secondary);
           text-decoration: none;
           position: relative;
+          padding: 8px 4px;
           transition: color var(--transition-fast);
         }
         
