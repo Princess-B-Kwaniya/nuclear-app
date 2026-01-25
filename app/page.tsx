@@ -426,16 +426,17 @@ export default function LandingPage() {
           position: fixed;
           top: 0;
           right: -100%;
-          width: 280px;
+          width: min(320px, 85vw);
           height: 100vh;
           background: white;
           box-shadow: var(--shadow-xl);
-          transition: right var(--transition-normal);
+          transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           z-index: 1000;
           padding: var(--space-6);
           display: flex;
           flex-direction: column;
           gap: var(--space-6);
+          overflow-y: auto;
         }
         
         .mobile-nav.active {
@@ -475,6 +476,21 @@ export default function LandingPage() {
           gap: var(--space-4);
         }
         
+        .mobile-nav-links .nav-link {
+          padding: 16px 8px;
+          font-size: 16px;
+          border-bottom: 1px solid var(--color-border-light);
+          min-height: 48px;
+          display: flex;
+          align-items: center;
+        }
+        
+        .mobile-nav-links .btn {
+          min-height: 48px;
+          justify-content: center;
+          font-size: 16px;
+        }
+        
         .hidden-mobile {
           display: block;
         }
@@ -501,6 +517,28 @@ export default function LandingPage() {
           h2 { font-size: 2rem; }
         }
         
+        @media (max-width: 640px) {
+          .container {
+            padding: 0 16px;
+          }
+          
+          .hero-content h1 {
+            font-size: 1.75rem !important;
+            line-height: 1.2;
+          }
+          
+          .hero-content p {
+            font-size: 1rem;
+            line-height: 1.5;
+          }
+          
+          .btn {
+            width: 100%;
+            min-height: 48px;
+            font-size: 16px;
+          }
+        }
+        
         @media (max-width: 768px) {
           .hidden-mobile {
             display: none !important;
@@ -512,16 +550,20 @@ export default function LandingPage() {
           
           .mobile-menu-btn {
             display: block;
+            min-width: 44px;
+            min-height: 44px;
           }
           
           .hero-grid {
             grid-template-columns: 1fr !important;
             gap: var(--space-8) !important;
             text-align: center;
+            padding: 2rem 0;
           }
           
           .hero-content h1 {
             font-size: 2rem !important;
+            margin-bottom: 1rem;
           }
           
           .grid-cols-3 {

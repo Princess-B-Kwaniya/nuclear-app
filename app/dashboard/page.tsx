@@ -65,24 +65,24 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6 lg:space-y-8">
+    <div className="space-y-4 sm:space-y-6 lg:space-y-8 px-safe">
       {/* Welcome Banner + Quick Actions */}
       <DashboardGreeting />
 
       {/* Live Shipment Map + Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-6">
         {/* Live Shipment Map */}
-        <div className="lg:col-span-3 dashboard-card p-4 sm:p-6 border">
+        <div className="lg:col-span-3 dashboard-card p-4 sm:p-6 border rounded-lg">
           <h3 className="dashboard-title text-lg sm:text-xl mb-4">Live Shipment Tracking</h3>
-          <div className="h-64 sm:h-80 lg:h-96">
+          <div className="h-56 sm:h-64 md:h-80 lg:h-96 rounded-md overflow-hidden">
             <LiveTrackingMap />
           </div>
         </div>
 
         {/* Recent Activity Feed */}
-        <div className="lg:col-span-2 dashboard-card p-4 sm:p-6 border">
+        <div className="lg:col-span-2 dashboard-card p-4 sm:p-6 border rounded-lg">
           <h3 className="dashboard-title text-lg sm:text-xl mb-4">Recent Activity</h3>
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {recentActivity.slice(0, 3).map((activity) => (
               <div key={activity.id} className="flex gap-3">
                 <div className="flex-shrink-0 w-2 h-2 rounded-full mt-2" style={{ backgroundColor: 'var(--color-primary)' }}></div>
@@ -93,7 +93,7 @@ export default async function DashboardPage() {
               </div>
             ))}
             {/* Show more button on mobile */}
-            <button type="button" className="md:hidden w-full text-center text-sm py-2 transition-colors" style={{ color: 'var(--color-primary)' }}>
+            <button type="button" className="md:hidden w-full text-center text-sm py-3 rounded-md border border-dashed transition-colors touch-manipulation min-h-[44px]" style={{ color: 'var(--color-primary)', borderColor: 'var(--color-border)' }}>
               View All Activity
             </button>
           </div>
@@ -101,10 +101,10 @@ export default async function DashboardPage() {
       </div>
 
       {/* Active Shipments Table Preview */}
-      <div className="dashboard-card border">
+      <div className="dashboard-card border rounded-lg overflow-hidden">
         <div className="p-4 sm:p-6 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-3" style={{ borderColor: 'var(--color-border)' }}>
           <h3 className="dashboard-title text-lg sm:text-xl">Active Shipments</h3>
-          <button className="flex items-center gap-1 text-sm self-start sm:self-auto transition-colors" style={{ color: 'var(--color-primary)' }}>
+          <button className="flex items-center justify-center gap-2 text-sm px-4 py-2 rounded-md border transition-colors touch-manipulation min-h-[44px] self-start sm:self-auto" style={{ color: 'var(--color-primary)', borderColor: 'var(--color-border)' }}>
             View All Shipments
             <ArrowRight className="w-4 h-4" />
           </button>
@@ -186,7 +186,7 @@ export default async function DashboardPage() {
       {/* Compliance Alerts + Upcoming Deliveries */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
         {/* Compliance Alerts */}
-        <div className="dashboard-card p-4 sm:p-6 border">
+        <div className="dashboard-card p-4 sm:p-6 border rounded-lg">
           <h3 className="dashboard-title text-lg sm:text-xl mb-4">Compliance Alerts</h3>
           <div className="space-y-3">
             {complianceAlerts.length > 0 ? (

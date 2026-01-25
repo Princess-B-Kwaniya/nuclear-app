@@ -130,32 +130,34 @@ function LoginForm() {
   }
 
   return (
-    <div className="inner-page min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
+    <div className="inner-page min-h-screen flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
+      <Card className="w-full max-w-md mx-auto">
+        <CardHeader className="text-center space-y-4 pb-6">
           <div className="flex justify-center mb-2">
             <AnimatedLogo size="md" />
           </div>
-          <CardTitle>{isSignUp ? 'Create Account' : 'Welcome Back'}</CardTitle>
-          <CardDescription>Nuclear Supply Chain Management</CardDescription>
+          <div className="space-y-2">
+            <CardTitle className="text-xl sm:text-2xl">{isSignUp ? 'Create Account' : 'Welcome Back'}</CardTitle>
+            <CardDescription className="text-sm sm:text-base">Nuclear Supply Chain Management</CardDescription>
+          </div>
         </CardHeader>
         
         {/* Demo Credentials Info - Only show on login */}
         {!isSignUp && (
-          <div className="mx-4 mb-4 p-4 bg-muted rounded-lg border">
+          <div className="mx-4 mb-4 p-3 sm:p-4 bg-muted rounded-lg border">
             <div className="flex items-start gap-2">
               <div className="flex-1">
                 <p className="text-sm font-medium mb-2">Demo Credentials</p>
-                <p className="text-xs text-muted-foreground mb-1">
+                <p className="text-xs sm:text-sm text-muted-foreground mb-1">
                   <span className="font-medium">Email:</span> {DEMO_EMAIL}
                 </p>
-                <p className="text-xs text-muted-foreground mb-3">
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3">
                   <span className="font-medium">Password:</span> {DEMO_PASSWORD}
                 </p>
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="w-full"
+                  className="w-full min-h-[44px] touch-manipulation"
                   onClick={useDemoCredentials}
                   type="button"
                 >
@@ -167,9 +169,9 @@ function LoginForm() {
         )}
         
         <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 p-4 sm:p-6">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-sm sm:text-base">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -182,7 +184,7 @@ function LoginForm() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="text-sm sm:text-base">Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -196,7 +198,7 @@ function LoginForm() {
             </div>
             {isSignUp && (
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Label htmlFor="confirmPassword" className="text-sm sm:text-base">Confirm Password</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
@@ -227,8 +229,8 @@ function LoginForm() {
               </div>
             )}
           </CardContent>
-          <CardFooter className="flex flex-col gap-4">
-            <Button type="submit" className="w-full" disabled={isLoading}>
+          <CardFooter className="flex flex-col gap-4 p-4 sm:p-6 pt-2">
+            <Button type="submit" className="w-full min-h-[48px] text-base touch-manipulation" disabled={isLoading}>
               {isLoading 
                 ? (isSignUp ? 'Creating account...' : 'Signing in...') 
                 : (isSignUp ? 'Create Account' : 'Sign In')
