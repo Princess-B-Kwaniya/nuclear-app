@@ -73,6 +73,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
             // Check if it's a demo user
             if (parsed.id === 'demo-user-id') {
               setUser(parsed)
+              // Set cookie for middleware
+              document.cookie = `nuclear_demo_user=true; path=/; max-age=86400` // 24 hours
               setIsLoading(false)
               return
             }
@@ -121,6 +123,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const demoUser = createDemoUser()
       setUser(demoUser)
       localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(demoUser))
+      // Set a cookie to indicate demo user for middleware
+      document.cookie = `nuclear_demo_user=true; path=/; max-age=86400` // 24 hours
       return { success: true, user: demoUser }
     }
     
@@ -200,6 +204,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (parsed.id === 'demo-user-id') {
           setUser(null)
           localStorage.removeItem(AUTH_STORAGE_KEY)
+          // Remove demo cookie
+          document.cookie = `nuclear_demo_user=; path=/; max-age=0`
           return
         }
       } catch (error) {
@@ -211,6 +217,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     await supabase.auth.signOut()
     setUser(null)
     localStorage.removeItem(AUTH_STORAGE_KEY)
+    // Remove demo cookie
+    document.cookie = `nuclear_demo_user=; path=/; max-age=0`
   }, [supabase.auth])
 
   const resetPassword = useCallback(async (email: string) => {

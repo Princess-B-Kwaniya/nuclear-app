@@ -17,6 +17,7 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDemoLoading, setIsDemoLoading] = useState(false);
   const { login, signUp } = useAuth();
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -80,6 +81,30 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
     }
   };
 
+  const handleDemoLogin = async () => {
+    setError(null);
+    setSuccessMessage(null);
+    setIsDemoLoading(true);
+
+    try {
+      const result = await login('demo@nuclear.app', 'demo123456');
+      if (result.success) {
+        setEmail('');
+        setPassword('');
+        // Use window.location for demo login to ensure full page reload
+        // This allows the auth context and middleware to properly initialize
+        window.location.href = '/dashboard';
+      } else {
+        setError(result.error || 'Demo login failed. Please try again.');
+        setIsDemoLoading(false);
+      }
+    } catch (error) {
+      console.error('Demo login error:', error);
+      setError('An unexpected error occurred. Please try again.');
+      setIsDemoLoading(false);
+    }
+  };
+
   return (
     <div 
       className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in duration-200"
@@ -118,6 +143,16 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
 
           {/* Social Login Buttons */}
           <div className="px-6 sm:px-8 pb-4 sm:pb-6">
+            {!isSignUp && (
+              <button
+                onClick={handleDemoLogin}
+                disabled={isDemoLoading}
+                className="w-full mb-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white py-3 rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all hover:scale-[1.02] active:scale-100 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 touch-manipulation min-h-[44px] text-base font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                {isDemoLoading ? 'Signing in...' : '🚀 Try Demo Account'}
+              </button>
+            )}
+            
             <div className="grid grid-cols-2 gap-2 sm:gap-3">
               <button className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors touch-manipulation min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                 <Chrome className="w-4 sm:w-5 h-4 sm:h-5 text-gray-700" />

@@ -72,7 +72,7 @@ export default function ProcurementPage() {
     return (
           <div className="max-w-3xl mx-auto">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
-              <h2 className="text-xl sm:text-2xl">
+              <h2 className="dashboard-title text-xl sm:text-2xl">
                 {editingRequest ? 'Edit Procurement Request' : 'New Procurement Request'}
               </h2>
               <button 
@@ -80,12 +80,17 @@ export default function ProcurementPage() {
                   setView('list');
                   setEditingRequest(null);
                 }}
-                className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors self-start"
+                className="dashboard-nav-item px-4 py-2 transition-colors self-start"
+                style={{ 
+                  color: 'var(--color-text-secondary)',
+                  backgroundColor: 'var(--color-bg-subtle)',
+                  borderRadius: 'var(--radius-md)'
+                }}
               >
                 Cancel
               </button>
             </div>
-            <div className="bg-card rounded-xl p-4 sm:p-6 lg:p-8 border border-border">
+            <div className="dashboard-card p-4 sm:p-6 lg:p-8 border">
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm mb-2 text-foreground">Isotope Type</label>
@@ -197,10 +202,10 @@ export default function ProcurementPage() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
-        <h2 className="font-heading text-xl sm:text-2xl text-foreground">Procurement Requests</h2>
+        <h2 className="dashboard-title text-xl sm:text-2xl">Procurement Requests</h2>
         <button 
           onClick={() => setView('form')}
-          className="bg-primary text-primary-foreground px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 self-start font-sans"
+          className="btn-primary px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-center gap-2 self-start font-sans"
         >
           <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
           New Request
@@ -208,9 +213,9 @@ export default function ProcurementPage() {
       </div>
 
       {/* Filters Bar */}
-      <div className="bg-card rounded-lg p-3 sm:p-4 mb-6 border border-border flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+      <div className="dashboard-card p-3 sm:p-4 mb-6 border flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
         <div className="relative flex-1 max-w-full sm:max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: 'var(--color-text-muted)' }} />
           <input 
             type="text" 
             placeholder="Search requests..."
@@ -239,18 +244,18 @@ export default function ProcurementPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
+      <div className="dashboard-card border overflow-hidden">
         {/* Desktop Table View */}
         <DesktopOnly>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px]">
-              <thead className="bg-muted border-b border-border">
+              <thead className="border-b" style={{ backgroundColor: 'var(--color-bg-subtle)', borderColor: 'var(--color-border)' }}>
               <tr>
-                <th className="px-4 sm:px-6 py-3 text-left text-xs text-muted-foreground uppercase tracking-wider font-sans">Request ID</th>
-                <th className="px-4 sm:px-6 py-3 text-left text-xs text-muted-foreground uppercase tracking-wider font-sans">Isotope</th>
-                <th className="px-4 sm:px-6 py-3 text-left text-xs text-muted-foreground uppercase tracking-wider font-sans">Quantity</th>
-                <th className="px-4 sm:px-6 py-3 text-left text-xs text-muted-foreground uppercase tracking-wider font-sans">Delivery Date</th>
-                <th className="px-4 sm:px-6 py-3 text-left text-xs text-muted-foreground uppercase tracking-wider font-sans">Status</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-xs uppercase tracking-wider font-sans" style={{ color: 'var(--color-text-muted)' }}>Request ID</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-xs uppercase tracking-wider font-sans" style={{ color: 'var(--color-text-muted)' }}>Isotope</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-xs uppercase tracking-wider font-sans" style={{ color: 'var(--color-text-muted)' }}>Quantity</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-xs uppercase tracking-wider font-sans" style={{ color: 'var(--color-text-muted)' }}>Delivery Date</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-xs uppercase tracking-wider font-sans" style={{ color: 'var(--color-text-muted)' }}>Status</th>
                 <th className="px-4 sm:px-6 py-3 text-left text-xs text-muted-foreground uppercase tracking-wider font-sans">Manufacturers</th>
                 <th className="px-4 sm:px-6 py-3 text-left text-xs text-muted-foreground uppercase tracking-wider font-sans">Actions</th>
               </tr>

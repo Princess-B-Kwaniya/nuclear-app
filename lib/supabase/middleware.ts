@@ -38,20 +38,24 @@ export async function updateSession(request: NextRequest) {
   // Refresh session if expired
   const { data: { user } } = await supabase.auth.getUser()
 
+  // Check for demo user cookie
+  const demoCookie = request.cookies.get('nuclear_demo_user')
+  const isDemoUser = demoCookie?.value === 'true'
+
   // Protected routes - redirect to login if not authenticated
   const protectedPaths = ['/dashboard']
   const isProtectedPath = protectedPaths.some(path =>
     request.nextUrl.pathname.startsWith(path)
   )
 
-  if (isProtectedPath && !user) {
+  if (isProtectedPath && !user && !isDemoUser) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 
   // Redirect authenticated users away from login page
-  if (request.nextUrl.pathname === '/login' && user) {
+  if (request.nextUrl.pathname === '/login' && (user || isDemoUser)) {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard'
     return NextResponse.redirect(url)

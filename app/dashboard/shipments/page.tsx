@@ -366,15 +366,25 @@ export default function ShipmentsPage() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
-        <h2 className="font-heading text-xl sm:text-2xl text-foreground">Shipments & Logistics</h2>
+        <h2 className="dashboard-title text-xl sm:text-2xl">Shipments & Logistics</h2>
         <div className="flex items-center gap-2 opacity-60 pointer-events-none select-none">
           <button 
-            className={`p-2 rounded-lg transition-colors bg-gray-100 text-gray-400`}
+            className={`p-2 transition-colors`}
+            style={{ 
+              backgroundColor: 'var(--color-bg-subtle)',
+              color: 'var(--color-text-muted)',
+              borderRadius: 'var(--radius-md)'
+            }}
           >
             <List className="w-5 h-5" />
           </button>
           <button 
-            className={`p-2 rounded-lg transition-colors bg-gray-100 text-gray-400`}
+            className={`p-2 transition-colors`}
+            style={{ 
+              backgroundColor: 'var(--color-bg-subtle)',
+              color: 'var(--color-text-muted)',
+              borderRadius: 'var(--radius-md)'
+            }}
           >
             <Map className="w-5 h-5" />
           </button>

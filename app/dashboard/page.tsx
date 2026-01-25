@@ -72,28 +72,28 @@ export default async function DashboardPage() {
       {/* Live Shipment Map + Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-6">
         {/* Live Shipment Map */}
-        <div className="lg:col-span-3 bg-card rounded-xl p-4 sm:p-6 border border-border">
-          <h3 className="font-heading text-lg sm:text-xl mb-4 text-foreground">Live Shipment Tracking</h3>
+        <div className="lg:col-span-3 dashboard-card p-4 sm:p-6 border">
+          <h3 className="dashboard-title text-lg sm:text-xl mb-4">Live Shipment Tracking</h3>
           <div className="h-64 sm:h-80 lg:h-96">
             <LiveTrackingMap />
           </div>
         </div>
 
         {/* Recent Activity Feed */}
-        <div className="lg:col-span-2 bg-card rounded-xl p-4 sm:p-6 border border-border">
-          <h3 className="font-heading text-lg sm:text-xl mb-4 text-foreground">Recent Activity</h3>
+        <div className="lg:col-span-2 dashboard-card p-4 sm:p-6 border">
+          <h3 className="dashboard-title text-lg sm:text-xl mb-4">Recent Activity</h3>
           <div className="space-y-4">
             {recentActivity.slice(0, 3).map((activity) => (
               <div key={activity.id} className="flex gap-3">
-                <div className="flex-shrink-0 w-2 h-2 bg-primary rounded-full mt-2"></div>
+                <div className="flex-shrink-0 w-2 h-2 rounded-full mt-2" style={{ backgroundColor: 'var(--color-primary)' }}></div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-foreground">{activity.event}</p>
-                  <p className="text-xs text-muted-foreground mt-1">{activity.time}</p>
+                  <p className="text-sm" style={{ color: 'var(--color-text-main)' }}>{activity.event}</p>
+                  <p className="text-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>{activity.time}</p>
                 </div>
               </div>
             ))}
             {/* Show more button on mobile */}
-            <button type="button" className="md:hidden w-full text-center text-sm text-primary hover:text-primary/90 py-2">
+            <button type="button" className="md:hidden w-full text-center text-sm py-2 transition-colors" style={{ color: 'var(--color-primary)' }}>
               View All Activity
             </button>
           </div>
@@ -101,10 +101,10 @@ export default async function DashboardPage() {
       </div>
 
       {/* Active Shipments Table Preview */}
-      <div className="bg-card rounded-xl border border-border">
-        <div className="p-4 sm:p-6 border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <h3 className="font-heading text-lg sm:text-xl text-foreground">Active Shipments</h3>
-          <button className="text-primary hover:text-primary/90 flex items-center gap-1 text-sm self-start sm:self-auto">
+      <div className="dashboard-card border">
+        <div className="p-4 sm:p-6 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-3" style={{ borderColor: 'var(--color-border)' }}>
+          <h3 className="dashboard-title text-lg sm:text-xl">Active Shipments</h3>
+          <button className="flex items-center gap-1 text-sm self-start sm:self-auto transition-colors" style={{ color: 'var(--color-primary)' }}>
             View All Shipments
             <ArrowRight className="w-4 h-4" />
           </button>
@@ -114,21 +114,21 @@ export default async function DashboardPage() {
         <DesktopOnly>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px]">
-              <thead className="bg-muted border-b border-border">
+              <thead className="border-b" style={{ backgroundColor: 'var(--color-bg-subtle)', borderColor: 'var(--color-border)' }}>
                 <tr>
-                  <th className="px-4 sm:px-6 py-3 text-left text-xs text-muted-foreground uppercase tracking-wider font-sans">ID</th>
-                  <th className="px-4 sm:px-6 py-3 text-left text-xs text-muted-foreground uppercase tracking-wider font-sans">Isotope</th>
-                  <th className="px-4 sm:px-6 py-3 text-left text-xs text-muted-foreground uppercase tracking-wider font-sans">Route</th>
-                  <th className="px-4 sm:px-6 py-3 text-left text-xs text-muted-foreground uppercase tracking-wider font-sans">Status</th>
-                  <th className="px-4 sm:px-6 py-3 text-left text-xs text-muted-foreground uppercase tracking-wider font-sans">ETA</th>
+                  <th className="px-4 sm:px-6 py-3 text-left text-xs uppercase tracking-wider font-sans" style={{ color: 'var(--color-text-muted)' }}>ID</th>
+                  <th className="px-4 sm:px-6 py-3 text-left text-xs uppercase tracking-wider font-sans" style={{ color: 'var(--color-text-muted)' }}>Isotope</th>
+                  <th className="px-4 sm:px-6 py-3 text-left text-xs uppercase tracking-wider font-sans" style={{ color: 'var(--color-text-muted)' }}>Route</th>
+                  <th className="px-4 sm:px-6 py-3 text-left text-xs uppercase tracking-wider font-sans" style={{ color: 'var(--color-text-muted)' }}>Status</th>
+                  <th className="px-4 sm:px-6 py-3 text-left text-xs uppercase tracking-wider font-sans" style={{ color: 'var(--color-text-muted)' }}>ETA</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border">
+              <tbody className="divide-y" style={{ backgroundColor: 'var(--color-bg-white)', borderColor: 'var(--color-border)' }}>
                 {activeShipments.slice(0, 5).map((shipment) => (
-                  <tr key={shipment.id} className="hover:bg-muted/50 transition-colors">
-                    <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-mono text-foreground">{shipment.id}</td>
-                    <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-foreground">{shipment.isotope}</td>
-                    <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-foreground">
+                  <tr key={shipment.id} className="dashboard-table-row">
+                    <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-mono" style={{ color: 'var(--color-text-main)' }}>{shipment.id}</td>
+                    <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm" style={{ color: 'var(--color-text-main)' }}>{shipment.isotope}</td>
+                    <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm" style={{ color: 'var(--color-text-main)' }}>
                       {shipment.origin} → {shipment.destination}
                     </td>
                     <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
@@ -136,7 +136,7 @@ export default async function DashboardPage() {
                         {shipment.status}
                       </span>
                     </td>
-                    <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-foreground">{shipment.eta}</td>
+                    <td className="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm" style={{ color: 'var(--color-text-main)' }}>{shipment.eta}</td>
                   </tr>
                 ))}
               </tbody>
@@ -186,18 +186,18 @@ export default async function DashboardPage() {
       {/* Compliance Alerts + Upcoming Deliveries */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
         {/* Compliance Alerts */}
-        <div className="bg-card rounded-xl p-4 sm:p-6 border border-border">
-          <h3 className="font-heading text-lg sm:text-xl mb-4 text-foreground">Compliance Alerts</h3>
+        <div className="dashboard-card p-4 sm:p-6 border">
+          <h3 className="dashboard-title text-lg sm:text-xl mb-4">Compliance Alerts</h3>
           <div className="space-y-3">
             {complianceAlerts.length > 0 ? (
               complianceAlerts.map((alert) => (
                 <div
                   key={alert.id}
-                  className={`flex items-start gap-3 p-4 rounded-lg ${alert.severity === 'warning'
-                      ? 'bg-amber-50 border border-amber-200'
+                  className={`flex items-start gap-3 p-4 rounded-lg border ${alert.severity === 'warning'
+                      ? 'bg-amber-50 border-amber-200'
                       : alert.severity === 'error'
-                        ? 'bg-red-50 border border-red-200'
-                        : 'bg-blue-50 border border-blue-200'
+                        ? 'bg-red-50 border-red-200'
+                        : 'bg-blue-50 border-blue-200'
                     }`}
                 >
                   <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${alert.severity === 'warning'
@@ -207,17 +207,17 @@ export default async function DashboardPage() {
                         : 'bg-blue-600'
                     }`}></div>
                   <div>
-                    <p className="text-sm text-foreground">{alert.title}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{alert.description}</p>
+                    <p className="text-sm" style={{ color: 'var(--color-text-main)' }}>{alert.title}</p>
+                    <p className="text-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>{alert.description}</p>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
-                <div className="w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"></div>
+              <div className="flex items-start gap-3 p-4 rounded-lg" style={{ backgroundColor: 'var(--color-success-bg)', borderColor: 'var(--color-success)', border: '1px solid' }}>
+                <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: 'var(--color-success)' }}></div>
                 <div>
-                  <p className="text-sm text-foreground">All Clear</p>
-                  <p className="text-xs text-muted-foreground mt-1">No compliance issues at this time</p>
+                  <p className="text-sm" style={{ color: 'var(--color-text-main)' }}>All Clear</p>
+                  <p className="text-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>No compliance issues at this time</p>
                 </div>
               </div>
             )}
