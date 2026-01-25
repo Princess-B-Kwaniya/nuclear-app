@@ -142,9 +142,14 @@ export default function ReportsPage() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3 opacity-60 pointer-events-none select-none">
-        <h2 className="font-heading text-xl sm:text-2xl text-foreground">Reports & Analytics</h2>
+        <h2 className="dashboard-title text-xl sm:text-2xl">Reports & Analytics</h2>
         <button 
-          className="px-4 py-2 bg-gray-100 text-gray-400 rounded-lg flex items-center justify-center gap-2 self-start text-sm"
+          className="px-4 py-2 flex items-center justify-center gap-2 self-start text-sm"
+          style={{
+            backgroundColor: 'var(--color-bg-subtle)',
+            color: 'var(--color-text-muted)',
+            borderRadius: 'var(--radius-md)'
+          }}
           disabled
         >
           <Download className="w-4 h-4" />
@@ -153,14 +158,21 @@ export default function ReportsPage() {
       </div>
 
       {/* Report Filters */}
-      <div className="bg-card rounded-xl p-4 sm:p-6 border border-border mb-6">
+      <div className="dashboard-card p-4 sm:p-6 border mb-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm mb-2 text-foreground">Report Type</label>
+            <label className="block text-sm mb-2" style={{ color: 'var(--color-text-main)' }}>Report Type</label>
             <select 
               value={reportType}
               onChange={(e) => setReportType(e.target.value)}
-              className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-input-background text-foreground"
+              className="w-full px-4 py-2 border focus:outline-none focus:ring-2"
+              style={{
+                borderColor: 'var(--color-border)',
+                backgroundColor: 'var(--color-bg-white)',
+                color: 'var(--color-text-main)',
+                borderRadius: 'var(--radius-md)',
+                focusRingColor: 'var(--color-primary)'
+              }}
             >
               <option>Shipment Performance</option>
               <option>Compliance Overview</option>

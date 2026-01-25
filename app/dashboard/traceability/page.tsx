@@ -71,7 +71,7 @@ export default function TraceabilityPage() {
   return (
     <div className="opacity-60 pointer-events-none select-none">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
-        <h2 className="font-heading text-xl sm:text-2xl text-foreground">Blockchain Traceability</h2>
+        <h2 className="dashboard-title text-xl sm:text-2xl">Blockchain Traceability</h2>
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <label className="flex items-center gap-2 cursor-pointer self-start">
             <input 
@@ -80,9 +80,9 @@ export default function TraceabilityPage() {
               onChange={(e) => setIsRegulatorView(e.target.checked)}
               className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
             />
-            <span className="text-xs sm:text-sm text-foreground">Regulator View</span>
+            <span className="text-xs sm:text-sm" style={{ color: 'var(--color-text-main)' }}>Regulator View</span>
           </label>
-          <button className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 text-sm font-sans">
+          <button className="btn-primary px-4 py-2 flex items-center justify-center gap-2 text-sm font-sans">
             <Download className="w-4 h-4" />
             <span className="whitespace-nowrap">Export Audit Report</span>
           </button>

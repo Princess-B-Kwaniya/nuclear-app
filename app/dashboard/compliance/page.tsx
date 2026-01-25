@@ -76,18 +76,18 @@ export default function CompliancePage() {
 
   return (
     <div>
-      <h2 className="font-heading text-xl sm:text-2xl mb-6 text-foreground">Compliance & Regulatory</h2>
+      <h2 className="dashboard-title text-xl sm:text-2xl mb-6">Compliance & Regulatory</h2>
 
       {/* Overview Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6">
-        <div className="bg-card rounded-xl p-4 sm:p-6 border border-border">
+        <div className="dashboard-card p-4 sm:p-6 border">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 flex items-center justify-center" style={{ borderRadius: 'var(--radius-lg)' }}>
               <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
             </div>
             <div>
               <div className="text-2xl sm:text-3xl">87%</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">Documents Compliant</div>
+              <div className="text-xs sm:text-sm" style={{ color: 'var(--color-text-muted)' }}>Documents Compliant</div>
             </div>
           </div>
           <div className="w-full bg-secondary rounded-full h-2">
@@ -95,27 +95,27 @@ export default function CompliancePage() {
           </div>
         </div>
 
-        <div className="bg-card rounded-xl p-4 sm:p-6 border border-border">
+        <div className="dashboard-card p-4 sm:p-6 border">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-100 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-100 flex items-center justify-center" style={{ borderRadius: 'var(--radius-lg)' }}>
               <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" />
             </div>
             <div>
               <div className="text-2xl sm:text-3xl">5</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">Expiring Soon</div>
+              <div className="text-xs sm:text-sm" style={{ color: 'var(--color-text-muted)' }}>Expiring Soon</div>
             </div>
           </div>
           <p className="text-xs sm:text-sm text-amber-600">Review within 7 days</p>
         </div>
 
-        <div className="bg-card rounded-xl p-4 sm:p-6 border border-border">
+        <div className="dashboard-card p-4 sm:p-6 border">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-100 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-100 flex items-center justify-center" style={{ borderRadius: 'var(--radius-lg)' }}>
               <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />
             </div>
             <div>
-              <div className="text-2xl sm:text-3xl text-foreground">2</div>
-              <div className="text-xs sm:text-sm text-muted-foreground">Action Required</div>
+              <div className="text-2xl sm:text-3xl" style={{ color: 'var(--color-text-main)' }}>2</div>
+              <div className="text-xs sm:text-sm" style={{ color: 'var(--color-text-muted)' }}>Action Required</div>
             </div>
           </div>
           <p className="text-xs sm:text-sm text-red-600">Immediate attention needed</p>

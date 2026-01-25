@@ -26,9 +26,11 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Source Code Pro - Primary tech font for body and UI */}
-        {/* JetBrains Mono - Secondary monospace for code/data display */}
-        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        {/* NuClear Design System Fonts */}
+        {/* Playfair Display - Elegant headings */}
+        {/* Plus Jakarta Sans - Modern body text */}
+        {/* JetBrains Mono - Technical/monospace display */}
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-sans antialiased">
         <Providers>
