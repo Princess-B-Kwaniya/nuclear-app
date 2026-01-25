@@ -379,8 +379,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               onClick={toggleSearch}
               className="dashboard-nav-item md:hidden p-2 transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
               style={{ 
-                borderRadius: 'var(--radius-md)',
-                focusRingColor: 'var(--color-primary)'
+                borderRadius: 'var(--radius-md)'
               }}
               aria-label="Search"
             >
