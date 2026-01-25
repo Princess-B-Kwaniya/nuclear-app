@@ -471,3 +471,65 @@ html {
     border-color: var(--tech-primary);
   }
 }
+
+/* Mobile-specific enhancements */
+@media (max-width: 768px) {
+  /* Improve touch targets for mobile */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+  
+  /* Mobile-friendly scrolling */
+  .touch-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+  
+  /* Mobile-safe viewport units */
+  .min-h-screen-safe {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  
+  /* Mobile font size adjustments */
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* Improve mobile tap highlighting */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Better mobile input zoom prevention */
+  input[type="search"],
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* iOS-specific enhancements */
+@supports (-webkit-touch-callout: none) {
+  /* iOS safe area support */
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .safe-area-inset-left {
+    padding-left: env(safe-area-inset-left);
+  }
+  
+  .safe-area-inset-right {
+    padding-right: env(safe-area-inset-right);
+  }
+}

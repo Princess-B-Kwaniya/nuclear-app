@@ -214,7 +214,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <aside 
           className={`${
             sidebarCollapsed ? 'lg:w-[72px]' : 'lg:w-[280px]'
-          } w-[280px] max-w-[85vw] dashboard-sidebar border-r flex flex-col transition-all duration-300 ease-out
+          } w-[280px] max-w-[90vw] dashboard-sidebar border-r flex flex-col transition-all duration-300 ease-out
           fixed lg:static inset-y-0 left-0 z-50 lg:z-auto
           ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           safe-area-inset-top safe-area-inset-bottom safe-area-inset-left
@@ -337,9 +337,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden min-w-0">
         {/* Top Header Bar */}
-        <header className="dashboard-header h-14 sm:h-16 border-b flex items-center justify-between px-3 sm:px-4 lg:px-8 flex-shrink-0">
+        <header className="dashboard-header h-14 sm:h-16 border-b flex items-center justify-between px-4 sm:px-6 lg:px-8 flex-shrink-0 safe-area-inset-top">
           {/* Mobile Menu Button & Page Title */}
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 lg:flex-initial">
+          <div className="flex items-center gap-3 min-w-0 flex-1 lg:flex-initial">
             <button
               onClick={openMobileMenu}
               className="lg:hidden p-2 rounded-lg transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted active:bg-muted"
@@ -349,7 +349,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             >
               <Menu className="w-6 h-6" aria-hidden="true" />
             </button>
-            <h1 className="dashboard-title text-base sm:text-lg lg:text-2xl font-semibold capitalize truncate">{getPageTitle()}</h1>
+            <h1 className="dashboard-title text-lg sm:text-xl lg:text-2xl font-semibold capitalize truncate">{getPageTitle()}</h1>
           </div>
 
           {/* Search Bar - Hidden on mobile, shown on tablet+ */}
@@ -360,7 +360,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 type="search"
                 name="search"
                 placeholder="Search..."
-                className="w-full pl-10 pr-4 py-2 border focus:outline-none focus:ring-2 focus:ring-offset-1 min-h-[44px] cursor-not-allowed opacity-60"
+                className="w-full pl-10 pr-4 py-2 border focus:outline-none focus:ring-2 focus:ring-offset-1 min-h-[44px] cursor-not-allowed opacity-60 text-base"
                 style={{ 
                   borderColor: 'var(--color-border)', 
                   color: 'var(--color-text-muted)', 
@@ -373,7 +373,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-1 sm:gap-2 lg:gap-3">
+          <div className="flex items-center gap-2 lg:gap-3">
             {/* Search button for mobile */}
             <button 
               onClick={toggleSearch}
@@ -431,8 +431,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         )}
 
         {/* Content Area */}
-        <main className="flex-1 overflow-auto touch-scroll" style={{ backgroundColor: 'var(--color-bg-body)' }}>
-          <div className="w-full p-3 sm:p-4 lg:p-8">
+        <main className="flex-1 overflow-auto touch-scroll safe-area-inset-bottom" style={{ backgroundColor: 'var(--color-bg-body)' }}>
+          <div className="w-full p-4 sm:p-6 lg:p-8 pb-8">
             {children}
           </div>
         </main>
