@@ -4,6 +4,7 @@ import { X, Mail, Lock, Github, Chrome } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts';
 import { AnimatedLogo } from '@/components';
+import { validateEmail, validatePassword, validatePasswordMatch } from '@/lib/utils/validation';
 
 export interface LoginModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDemoLoading, setIsDemoLoading] = useState(false);
@@ -53,25 +55,74 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
     setIsSubmitting(true);
 
     try {
-      const result = isSignUp
-        ? await signUp(email, password)
-        : await login(email, password);
+      if (isSignUp) {
+        // Validate signup form
+        const emailValidation = validateEmail(email);
+        if (!emailValidation.valid) {
+          setError(emailValidation.error!);
+          setIsSubmitting(false);
+          return;
+        }
 
-      if (result.success) {
-        if (isSignUp) {
-          setSuccessMessage('Account created! Please check your email to confirm.');
-          setEmail('');
-          setPassword('');
+        const passwordValidation = validatePassword(password);
+        if (!passwordValidation.valid) {
+          setError(passwordValidation.error!);
+          setIsSubmitting(false);
+          return;
+        }
+
+        const matchValidation = validatePasswordMatch(password, confirmPassword);
+        if (!matchValidation.valid) {
+          setError(matchValidation.error!);
+          setIsSubmitting(false);
+          return;
+        }
+
+        // Attempt signup
+        const result = await signUp(email, password);
+
+        if (result.success) {
+          if (result.message) {
+            // Email confirmation required
+            setSuccessMessage(result.message);
+            setEmail('');
+            setPassword('');
+            setConfirmPassword('');
+            setIsSignUp(false); // Switch to login view
+          } else {
+            // Logged in immediately
+            setEmail('');
+            setPassword('');
+            setConfirmPassword('');
+            onLogin();
+          }
         } else {
+          setError(result.error || 'Sign up failed. Please try again.');
+        }
+      } else {
+        // Validate login form
+        const emailValidation = validateEmail(email);
+        if (!emailValidation.valid) {
+          setError(emailValidation.error!);
+          setIsSubmitting(false);
+          return;
+        }
+
+        if (!password || password.trim().length === 0) {
+          setError('Password is required');
+          setIsSubmitting(false);
+          return;
+        }
+
+        // Attempt login
+        const result = await login(email, password);
+
+        if (result.success) {
           setEmail('');
           setPassword('');
           onLogin();
-        }
-      } else {
-        setError(result.error || (isSignUp ? 'Sign up failed.' : 'Login failed.') + ' Please try again.');
-        // If error suggests email verification needed, show gentle message
-        if (!isSignUp && result.error?.includes('Email not confirmed')) {
-          setError('Please verify your email address before logging in.');
+        } else {
+          setError(result.error || 'Login failed. Please try again.');
         }
       }
     } catch {
@@ -190,27 +241,53 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
                     className="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all text-base touch-manipulation"
                     required
                     autoComplete="email"
+                    disabled={isSubmitting}
+                    aria-describedby={error ? "modal-error-message" : undefined}
                   />
                 </div>
               </div>
 
               {/* Password Input */}
-              {!isSignUp && (
+              <div>
+                <label htmlFor="password" className="block text-sm mb-1.5 sm:mb-2 text-gray-700">
+                  Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-gray-400" />
+                  <input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder={isSignUp ? "At least 6 characters" : "••••••••"}
+                    className="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all text-base touch-manipulation"
+                    required
+                    autoComplete={isSignUp ? "new-password" : "current-password"}
+                    disabled={isSubmitting}
+                    aria-describedby={error ? "modal-error-message" : undefined}
+                  />
+                </div>
+              </div>
+
+              {/* Confirm Password for Sign Up */}
+              {isSignUp && (
                 <div>
-                  <label htmlFor="password" className="block text-sm mb-1.5 sm:mb-2 text-gray-700">
-                    Password
+                  <label htmlFor="confirmPassword" className="block text-sm mb-1.5 sm:mb-2 text-gray-700">
+                    Confirm Password
                   </label>
                   <div className="relative">
                     <Lock className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-gray-400" />
                     <input
-                      id="password"
+                      id="confirmPassword"
                       type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="••••••••"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="Confirm your password"
                       className="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all text-base touch-manipulation"
                       required
-                      autoComplete="current-password"
+                      autoComplete="new-password"
+                      disabled={isSubmitting}
+                      aria-describedby={error ? "modal-error-message" : undefined}
                     />
                   </div>
                 </div>
@@ -227,14 +304,18 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
 
               {/* Success Message */}
               {successMessage && (
-                <div className="p-3 bg-green-50 border border-green-200 rounded-xl text-sm text-green-600" role="alert">
+                <div className="p-3 bg-green-50 border border-green-200 rounded-xl text-sm text-green-600" role="status">
                   {successMessage}
                 </div>
               )}
 
               {/* Error Message */}
               {error && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600" role="alert">
+                <div 
+                  id="modal-error-message"
+                  className="p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600" 
+                  role="alert"
+                >
                   {error}
                 </div>
               )}
@@ -255,7 +336,7 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
                 disabled={isSubmitting}
                 className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all hover:scale-[1.02] active:scale-100 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 touch-manipulation min-h-[44px] text-base font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                {isSubmitting ? 'Signing in...' : (isSignUp ? 'Create account' : 'Sign in')}
+                {isSubmitting ? (isSignUp ? 'Creating account...' : 'Signing in...') : (isSignUp ? 'Create account' : 'Sign in')}
               </button>
             </div>
           </form>
@@ -266,8 +347,14 @@ export function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
               {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
               <button
                 type="button"
-                onClick={() => setIsSignUp(!isSignUp)}
+                onClick={() => {
+                  setIsSignUp(!isSignUp);
+                  setError(null);
+                  setSuccessMessage(null);
+                  setConfirmPassword('');
+                }}
                 className="text-purple-600 hover:text-purple-700 transition-colors font-medium touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                disabled={isSubmitting}
               >
                 {isSignUp ? 'Sign in' : 'Sign up'}
               </button>
