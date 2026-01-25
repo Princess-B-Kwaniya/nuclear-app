@@ -499,6 +499,16 @@ export default function LandingPage() {
           display: none;
         }
         
+        @media (min-width: 1024px) {
+          .grid[style*="grid-template-columns: 1fr"][style*="margin-bottom"] {
+            grid-template-columns: 1fr 1fr !important;
+          }
+          
+          .grid[style*="grid-template-columns: 1fr"]:not([style*="margin-bottom"]) {
+            grid-template-columns: 1fr 1fr !important;
+          }
+        }
+        
         @media (max-width: 1024px) {
           .container {
             padding: 0 var(--space-4);
@@ -515,6 +525,18 @@ export default function LandingPage() {
           
           h1 { font-size: 2.5rem; }
           h2 { font-size: 2rem; }
+          
+          /* Ensure zig-zag sections stack on mobile */
+          .grid[style*="grid-template-columns: 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: var(--space-8) !important;
+          }
+          
+          /* Make images responsive in zig-zag sections */
+          .grid[style*="grid-template-columns: 1fr"] img {
+            width: 100%;
+            height: auto;
+          }
         }
         
         @media (max-width: 640px) {
@@ -564,6 +586,22 @@ export default function LandingPage() {
           .hero-content h1 {
             font-size: 2rem !important;
             margin-bottom: 1rem;
+          }
+          
+          /* Fix feature sections for mobile */
+          .grid[style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+            margin-bottom: 80px !important;
+          }
+          
+          /* Ensure proper order on mobile */
+          .order-1 {
+            order: 1;
+          }
+          
+          .order-2 {
+            order: 2;
           }
           
           .grid-cols-3 {
@@ -628,7 +666,7 @@ export default function LandingPage() {
 
           <div className="flex gap-4 items-center">
             <button onClick={handleOpenLogin} className="btn btn-ghost hidden-mobile">Log In</button>
-            <button onClick={handleOpenLogin} className="btn btn-primary">Get Started</button>
+            <button onClick={handleOpenLogin} className="btn btn-primary hidden-mobile">Get Started</button>
             <button className="mobile-menu-btn mobile-only" onClick={toggleMobileMenu}>
               <Menu size={24} />
             </button>
@@ -837,14 +875,14 @@ export default function LandingPage() {
       </section>
 
       {/* Detailed Features (Zig-Zag) */}
-      <section style={{padding: '120px 0', background: 'white'}}>
+      <section style={{padding: 'clamp(60px, 10vw, 120px) 0', background: 'white'}}>
         <div className="container">
           {/* Feature 1 */}
-          <div className="grid" style={{gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center', marginBottom: '120px'}}>
-            <div>
+          <div className="grid" style={{gridTemplateColumns: '1fr', gap: 'clamp(32px, 6vw, 80px)', alignItems: 'center', marginBottom: 'clamp(60px, 10vw, 120px)'}}>
+            <div className="order-2 lg:order-1" style={{gridColumn: '1'}}>
               <span style={{color: 'var(--color-accent)', fontWeight: '700', fontSize: '12px', letterSpacing: '2px', textTransform: 'uppercase'}}>Automated Compliance</span>
-              <h2 style={{margin: '16px 0 24px', fontFamily: 'var(--font-heading)', fontSize: '2.5rem', fontWeight: '700', color: 'var(--color-primary)'}}>Navigating Regulatory Complexity with Ease</h2>
-              <p style={{fontSize: '18px', marginBottom: '32px', color: 'var(--color-text-secondary)'}}>
+              <h2 style={{margin: '16px 0 24px', fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', fontWeight: '700', color: 'var(--color-primary)'}}>Navigating Regulatory Complexity with Ease</h2>
+              <p style={{fontSize: 'clamp(14px, 3vw, 18px)', marginBottom: '32px', color: 'var(--color-text-secondary)'}}>
                 Nuclear medicine logistics involves a maze of international and local regulations. NuClear automates the generation of compliant documentation, ensuring every shipment meets IAEA, IATA, and local health authority standards instantly.
               </p>
               <ul className="flex flex-col gap-4" style={{listStyle: 'none', padding: 0}}>
@@ -868,38 +906,38 @@ export default function LandingPage() {
                 </li>
               </ul>
             </div>
-            <div style={{background: 'var(--color-bg-subtle)', borderRadius: 'var(--radius-xl)', minHeight: '400px', position: 'relative', overflow: 'hidden', border: '1px solid var(--color-border)'}}>
+            <div className="order-1 lg:order-2" style={{background: 'var(--color-bg-subtle)', borderRadius: 'var(--radius-xl)', minHeight: 'clamp(250px, 50vw, 400px)', position: 'relative', overflow: 'hidden', border: '1px solid var(--color-border)', gridColumn: '1'}}>
               <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?q=80&w=1000&auto=format&fit=crop" alt="Compliance Dashboard" style={{width: '100%', height: '100%', objectFit: 'cover', opacity: '0.9'}} />
-              <div className="card" style={{position: 'absolute', bottom: '40px', right: '40px', padding: '16px', display: 'flex', gap: '12px', alignItems: 'center', width: 'auto', background: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(4px)'}}>
-                <div style={{width: '32px', height: '32px', background: 'var(--color-success)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0}}>
+              <div className="card" style={{position: 'absolute', bottom: 'clamp(20px, 5vw, 40px)', right: 'clamp(20px, 5vw, 40px)', padding: 'clamp(12px, 3vw, 16px)', display: 'flex', gap: '12px', alignItems: 'center', width: 'auto', background: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(4px)', maxWidth: 'calc(100% - 40px)'}}>
+                <div style={{width: 'clamp(24px, 4vw, 32px)', height: 'clamp(24px, 4vw, 32px)', background: 'var(--color-success)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0}}>
                   <Check size={16} />
                 </div>
-                <div>
-                  <div style={{fontWeight: '600', fontSize: '12px'}}>Compliance Check Passed</div>
-                  <div style={{color: 'var(--color-text-secondary)', fontSize: '10px'}}>ID: 99283-AX verified</div>
+                <div style={{minWidth: 0}}>
+                  <div style={{fontWeight: '600', fontSize: 'clamp(10px, 2.5vw, 12px)'}}>Compliance Check Passed</div>
+                  <div style={{color: 'var(--color-text-secondary)', fontSize: 'clamp(9px, 2vw, 10px)'}}>ID: 99283-AX verified</div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Feature 2 */}
-          <div className="grid" style={{gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center'}}>
+          <div className="grid" style={{gridTemplateColumns: '1fr', gap: 'clamp(32px, 6vw, 80px)', alignItems: 'center'}}>
             {/* Image Left */}
-            <div style={{background: 'var(--color-bg-subtle)', borderRadius: 'var(--radius-xl)', minHeight: '400px', position: 'relative', overflow: 'hidden', border: '1px solid var(--color-border)'}}>
+            <div className="order-1 lg:order-1" style={{background: 'var(--color-bg-subtle)', borderRadius: 'var(--radius-xl)', minHeight: 'clamp(250px, 50vw, 400px)', position: 'relative', overflow: 'hidden', border: '1px solid var(--color-border)', gridColumn: '1'}}>
               <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1000&auto=format&fit=crop" alt="Logistics Tracking" style={{width: '100%', height: '100%', objectFit: 'cover', opacity: '0.9'}} />
-              <div className="card" style={{position: 'absolute', top: '40px', left: '40px', padding: '12px 20px', width: 'auto', background: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(4px)'}}>
-                <div style={{fontWeight: '600', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '8px'}}>
-                  <Scan size={14} />
-                  Batch #A-292 Scanned
+              <div className="card" style={{position: 'absolute', top: 'clamp(20px, 5vw, 40px)', left: 'clamp(20px, 5vw, 40px)', padding: 'clamp(8px, 2vw, 12px) clamp(12px, 3vw, 20px)', width: 'auto', background: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(4px)', maxWidth: 'calc(100% - 40px)'}}>
+                <div style={{fontWeight: '600', fontSize: 'clamp(10px, 2.5vw, 12px)', display: 'flex', alignItems: 'center', gap: '8px'}}>
+                  <Scan size={14} style={{flexShrink: 0}} />
+                  <span>Batch #A-292 Scanned</span>
                 </div>
               </div>
             </div>
 
             {/* Content Right */}
-            <div>
+            <div className="order-2 lg:order-2" style={{gridColumn: '1'}}>
               <span style={{color: 'var(--color-accent)', fontWeight: '700', fontSize: '12px', letterSpacing: '2px', textTransform: 'uppercase'}}>Safety & Security</span>
-              <h2 style={{margin: '16px 0 24px', fontFamily: 'var(--font-heading)', fontSize: '2.5rem', fontWeight: '700', color: 'var(--color-primary)'}}>Real-Time Chain of Custody</h2>
-              <p style={{fontSize: '18px', marginBottom: '32px', color: 'var(--color-text-secondary)'}}>
+              <h2 style={{margin: '16px 0 24px', fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', fontWeight: '700', color: 'var(--color-primary)'}}>Real-Time Chain of Custody</h2>
+              <p style={{fontSize: 'clamp(14px, 3vw, 18px)', marginBottom: '32px', color: 'var(--color-text-secondary)'}}>
                 Leveraging blockchain technology, we create an immutable record of every handler, temperature fluctuation, and location ping. Build trust with your partners through unparalleled transparency.
               </p>
               <ul className="flex flex-col gap-4" style={{listStyle: 'none', padding: 0}}>
